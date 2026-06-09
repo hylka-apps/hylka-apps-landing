@@ -1,5 +1,5 @@
 /* ============================================================
-   i18n strings — Hilka Aps
+   i18n strings — Hylka Apps
    EN is the default + fallback. UK has the strings provided in
    CONTENT.md (header + landing hero + a few global bits); any
    missing key falls back to the EN text already in the HTML.
@@ -22,12 +22,12 @@ window.HILKA_I18N = {
     "footer.link.contact": "Contact",
     "footer.link.terms": "Terms of Use",
     "footer.link.privacy": "Privacy Policy",
-    "footer.copyright": "© 2026 Hilka Aps · All rights reserved.",
+    "footer.copyright": "© 2026 Hylka Apps · All rights reserved.",
     "footer.legalnote": "Made with care for the things that matter.",
     // landing hero
     "home.eyebrow": "Indie iOS studio",
     "home.h1": "Small apps, made with care.",
-    "home.sub": "Hilka Aps builds focused, beautifully simple iOS apps that do one thing well — no clutter, no noise.",
+    "home.sub": "Hylka Apps builds focused, beautifully simple iOS apps that do one thing well — no clutter, no noise.",
     "home.cta1": "Explore the App",
     "home.cta2": "About us",
   },
@@ -45,11 +45,11 @@ window.HILKA_I18N = {
     "footer.link.about": "Про нас",
     "footer.link.more": "Більше",
     "footer.link.contact": "Контакти",
-    "footer.copyright": "© 2026 Hilka Aps · Усі права захищено.",
+    "footer.copyright": "© 2026 Hylka Apps · Усі права захищено.",
     // landing hero
     "home.eyebrow": "Інді iOS студія",
     "home.h1": "Маленькі застосунки, зроблені з турботою.",
-    "home.sub": "Hilka Aps створює прості й продумані iOS-застосунки, що роблять одну справу добре — без зайвого та без шуму.",
+    "home.sub": "Hylka Apps створює прості й продумані iOS-застосунки, що роблять одну справу добре — без зайвого та без шуму.",
     "home.cta1": "Переглянути застосунок",
     "home.cta2": "Про нас",
   }

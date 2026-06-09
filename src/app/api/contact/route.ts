@@ -15,9 +15,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  // TODO: wire up Resend — deliver to contact@hilkaaps.com
+  // TODO: wire up Resend — deliver to contact@hylkaapps.com
   // const resend = new Resend(process.env.RESEND_API_KEY);
-  // await resend.emails.send({ from: ..., to: "contact@hilkaaps.com", ... });
+  // await resend.emails.send({ from: ..., to: "contact@hylkaapps.com", ... });
 
   console.log("Contact form submission:", body);
 

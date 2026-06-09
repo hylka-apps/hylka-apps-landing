@@ -144,8 +144,8 @@ export default function ContactForm({ strings }: { strings: Strings }) {
             </button>
             <p className="cf-email-line">
               {strings.emailLine}{" "}
-              <a href="mailto:hello@hilkaaps.com" className="textlink">
-                hello@hilkaaps.com
+              <a href="mailto:hello@hylkaapps.com" className="textlink">
+                hello@hylkaapps.com
               </a>
             </p>
           </div>

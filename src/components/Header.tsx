@@ -19,9 +19,9 @@ const LANG_LABEL: Record<string, { flag: string; short: string; full: string }> 
 
 function Brand({ onClick }: { onClick?: () => void }) {
   return (
-    <Link className="brand" href="/" aria-label="Hilka Aps home" onClick={onClick}>
+    <Link className="brand" href="/" aria-label="Hylka Apps home" onClick={onClick}>
       <span className="logo-mark">H</span>
-      <span>Hilka Aps</span>
+      <span>Hylka Apps</span>
     </Link>
   );
 }

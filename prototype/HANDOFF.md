@@ -1,6 +1,6 @@
-# HANDOFF.md — Hilka Aps prototype
+# HANDOFF.md — Hylka Apps prototype
 
-Interactive, multi-page marketing-site prototype for **Hilka Aps**, built to spec from
+Interactive, multi-page marketing-site prototype for **Hylka Apps**, built to spec from
 `DESIGN.md` (visual system), `STRUCTURE.md` (page structure) and `CONTENT.md` (mock copy).
 Visual language is the locked **Paste / Apple-style light theme** (no dark variant, Eney
 design system intentionally not used per the brief).
@@ -58,7 +58,7 @@ per-app content record.
     i18n lib (next-intl / astro-i18n / @nuxtjs/i18n). The switcher must preserve the path.
 - **Contact form** — client validation + honeypot (`name="company"`) are in place; submit is
   simulated. Wire to a real endpoint/form service delivering to the feedback email
-  (mock `hello@hilkaaps.com`). Keep the honeypot; do **not** add a user-solved CAPTCHA.
+  (mock `hello@hylkaapps.com`). Keep the honeypot; do **not** add a user-solved CAPTCHA.
 - **Content without redeploy** — app listings + product-page content should come from an
   external source (headless CMS / hosted JSON-MD). The product template is already
   structured for data-driven rendering with the optional-section flags above.
@@ -70,8 +70,8 @@ per-app content record.
 ## 4. Placeholders to replace before launch
 - **Focusly** → real product: name, app icon, real screenshots (replace `.phone`/gradient
   placeholders), descriptions, real App Store URL (currently `id000000000`).
-- Mock email `hello@hilkaaps.com` → real feedback address.
-- "Hilka Aps" logo mark (currently a CSS gradient "H" tile).
+- Mock email `hello@hylkaapps.com` → real feedback address.
+- "Hylka Apps" logo mark (currently a CSS gradient "H" tile).
 - Final Terms / Privacy legal text.
 - App Store badge is a CSS reproduction — swap for the official downloadable badge asset.
 

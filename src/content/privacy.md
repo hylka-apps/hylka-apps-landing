@@ -1,4 +1,4 @@
-This Privacy Policy explains how Hilka Aps handles your data. This is placeholder text
+This Privacy Policy explains how Hylka Apps handles your data. This is placeholder text
 for the prototype — replace with the final policy before launch.
 
 ## 1. Data we collect
@@ -15,8 +15,8 @@ We may collect anonymous, aggregated usage stats to improve the app.
 
 ## 4. Your rights
 
-You can request deletion of any data we hold by emailing [hello@hilkaaps.com](mailto:hello@hilkaaps.com).
+You can request deletion of any data we hold by emailing [hello@hylkaapps.com](mailto:hello@hylkaapps.com).
 
 ## 5. Contact
 
-Privacy questions? Email [hello@hilkaaps.com](mailto:hello@hilkaaps.com).
+Privacy questions? Email [hello@hylkaapps.com](mailto:hello@hylkaapps.com).

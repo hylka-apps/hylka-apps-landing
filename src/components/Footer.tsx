@@ -9,9 +9,9 @@ export default function Footer() {
       <div className="wrap">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link className="brand" href="/" aria-label="Hilka Aps home">
+            <Link className="brand" href="/" aria-label="Hylka Apps home">
               <span className="logo-mark">H</span>
-              <span>Hilka Aps</span>
+              <span>Hylka Apps</span>
             </Link>
             <p>{t("tagline")}</p>
           </div>
@@ -50,7 +50,7 @@ export default function Footer() {
                 <Link href="/privacy">{t("links.privacy")}</Link>
               </li>
               <li>
-                <a href="mailto:hello@hilkaaps.com">hello@hilkaaps.com</a>
+                <a href="mailto:hello@hylkaapps.com">hello@hylkaapps.com</a>
               </li>
             </ul>
           </div>

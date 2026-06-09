@@ -6,7 +6,7 @@
 
 ---
 
-Build an interactive, multi-page prototype for **Hilka Aps** — a marketing website
+Build an interactive, multi-page prototype for **Hylka Apps** — a marketing website
 for a small indie iOS studio's apps. Three spec files accompany this brief:
 
 - **DESIGN.md** — the visual design system: colors, typography scale, fonts, button
@@ -14,7 +14,7 @@ for a small indie iOS studio's apps. Three spec files accompany this brief:
   single source of truth for *how things look*.
 - **STRUCTURE.md** — the concrete, section-by-section structure of every page. Treat this
   as the single source of truth for *what each page contains and in what order*.
-- **CONTENT.md** — mock example copy for every page (brand "Hilka Aps", example app
+- **CONTENT.md** — mock example copy for every page (brand "Hylka Apps", example app
   "Focusly"). Use this text in the prototype. It's all placeholder — to be replaced with
   the real product later.
 
@@ -59,7 +59,7 @@ Use realistic placeholder copy where final content isn't provided; mark obvious
 placeholders so they're easy to find.
 
 ### Confirmed
-- Brand: **Hilka Aps**.
+- Brand: **Hylka Apps**.
 - Theme: light "Paste" system only.
 - Locales: English (default) + Ukrainian.
 - One app — the mock **"Focusly"** (see CONTENT.md): one landing card + one full product page.
@@ -67,6 +67,6 @@ placeholders so they're easy to find.
 
 ### Placeholders (mock now, real later — already filled in CONTENT.md)
 - App "Focusly" → real product (name, icon, screenshots, descriptions, App Store link)
-- Email `hello@hilkaaps.com` → real feedback email
-- "Hilka Aps" logo asset
+- Email `hello@hylkaapps.com` → real feedback email
+- "Hylka Apps" logo asset
 - Terms / Privacy markdown → final legal text

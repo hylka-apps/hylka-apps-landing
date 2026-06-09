@@ -1,5 +1,5 @@
 /* ============================================================
-   site.js — shared chrome for every Hilka Aps page
+   site.js — shared chrome for every Hylka Apps page
    - Locale handling (?lang=en|uk, default en, EN fallback)
    - Header (brand, nav, language switcher, CTA, hamburger)
    - Mobile drawer
@@ -73,8 +73,8 @@
   function headerHTML() {
     return '' +
       '<header class="site-header"><div class="wrap">' +
-        '<a class="brand" href="' + withLang("index.html") + '" aria-label="Hilka Aps home">' +
-          '<span class="logo-mark">H</span><span>Hilka Aps</span>' +
+        '<a class="brand" href="' + withLang("index.html") + '" aria-label="Hylka Apps home">' +
+          '<span class="logo-mark">H</span><span>Hylka Apps</span>' +
         '</a>' +
         '<nav class="nav" aria-label="Primary">' + navLinks() + '</nav>' +
         '<div class="header-right">' +
@@ -101,7 +101,7 @@
       '<div class="drawer-overlay" id="drawerOverlay"></div>' +
       '<aside class="drawer" id="drawer" aria-hidden="true">' +
         '<div class="drawer-top">' +
-          '<a class="brand" href="' + withLang("index.html") + '"><span class="logo-mark">H</span><span>Hilka Aps</span></a>' +
+          '<a class="brand" href="' + withLang("index.html") + '"><span class="logo-mark">H</span><span>Hylka Apps</span></a>' +
           '<button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>' +
         '</div>' +
         '<nav>' + navLinks("") + '</nav>' +
@@ -122,7 +122,7 @@
       '<footer class="site-footer">' +
         '<div class="wrap"><div class="footer-grid">' +
           '<div class="footer-brand">' +
-            '<a class="brand" href="' + withLang("index.html") + '"><span class="logo-mark">H</span><span>Hilka Aps</span></a>' +
+            '<a class="brand" href="' + withLang("index.html") + '"><span class="logo-mark">H</span><span>Hylka Apps</span></a>' +
             '<p data-i18n="footer.tagline">Small, considered iOS apps.</p>' +
           '</div>' +
           '<div class="footer-col"><h4 data-i18n="footer.col.apps">Apps</h4><ul>' +
@@ -140,7 +140,7 @@
           '</ul></div>' +
         '</div></div>' +
         '<div class="footer-bottom"><div class="wrap">' +
-          '<p data-i18n="footer.copyright">© 2026 Hilka Aps · All rights reserved.</p>' +
+          '<p data-i18n="footer.copyright">© 2026 Hylka Apps · All rights reserved.</p>' +
           '<p data-i18n="footer.legalnote">Made with care for the things that matter.</p>' +
         '</div></div>' +
       '</footer>';

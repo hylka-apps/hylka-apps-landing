@@ -1,4 +1,4 @@
-# Hilka Aps — CONTENT.md (mock example copy)
+# Hylka Apps — CONTENT.md (mock example copy)
 
 > **All copy here is placeholder / mockup** for the prototype. The app **"Focusly"** is a
 > made-up example — replace it (and every string below) with the real product later.
@@ -13,13 +13,13 @@
 
 ## 0. Global
 
-- **Brand name:** Hilka Aps
-- **Tagline (meta / OG):** "Hilka Aps — small, considered iOS apps."
-- **Contact email (mock):** `hello@hilkaaps.com`
-- **Copyright line:** `© 2026 Hilka Aps · All rights reserved.`
+- **Brand name:** Hylka Apps
+- **Tagline (meta / OG):** "Hylka Apps — small, considered iOS apps."
+- **Contact email (mock):** `hello@hylkaapps.com`
+- **Copyright line:** `© 2026 Hylka Apps · All rights reserved.`
 
 ### Header (all pages)
-- Wordmark: **Hilka Aps**
+- Wordmark: **Hylka Apps**
 - Nav: `Apps` · `More` · `About` · `Contact`
 - Language switcher: `EN` / `UK`
 - Header CTA button: **Get the App**
@@ -28,8 +28,8 @@
 - **Apps:** Focusly
 - **Company:** About · More · Contact
 - **Legal:** Terms of Use · Privacy Policy
-- Email link: `hello@hilkaaps.com`
-- Bottom row: `© 2026 Hilka Aps · All rights reserved.`
+- Email link: `hello@hylkaapps.com`
+- Bottom row: `© 2026 Hylka Apps · All rights reserved.`
 
 ---
 
@@ -38,7 +38,7 @@
 **Hero**
 - Eyebrow: `INDIE iOS STUDIO`
 - H1: **Small apps, made with care.**
-- Sub: "Hilka Aps builds focused, beautifully simple iOS apps that do one thing well — no clutter, no noise."
+- Sub: "Hylka Apps builds focused, beautifully simple iOS apps that do one thing well — no clutter, no noise."
 - Primary CTA: **Explore the App** → scrolls to apps grid
 - Secondary CTA: **About us** → `/en/about`
 
@@ -132,7 +132,7 @@
 ## 3. More page (`/en/more`)
 
 - Eyebrow: `MORE`
-- H1: **More from Hilka Aps**
+- H1: **More from Hylka Apps**
 - Intro: "A few extra things — what we're working on and how to reach us."
 - Link blocks:
   - **Apps** → Focusly
@@ -145,9 +145,9 @@
 
 - Eyebrow: `ABOUT`
 - H1: **An indie iOS studio.**
-- Lead: "Hilka Aps is a tiny studio making focused iOS apps for everyday life."
+- Lead: "Hylka Apps is a tiny studio making focused iOS apps for everyday life."
 - Story (prose):
-  > "We believe the best software does less, better. Every Hilka app starts with one
+  > "We believe the best software does less, better. Every Hylka app starts with one
   > clear job and a calm, uncluttered interface — then we sweat the details until it feels
   > effortless. No dark patterns, no noise, no upsell maze. Just small, honest tools we'd
   > want to use ourselves."
@@ -171,8 +171,8 @@
   - **Message** — placeholder "Tell us more…" (with counter)
   - Submit button: **Send message**
 - Success message: "Thanks! Your message is on its way to us."
-- Error message: "Something went wrong — please try again or email hello@hilkaaps.com."
-- Under form: "Prefer email? Reach us at **hello@hilkaaps.com**."
+- Error message: "Something went wrong — please try again or email hello@hylkaapps.com."
+- Under form: "Prefer email? Reach us at **hello@hylkaapps.com**."
 
 ---
 
@@ -182,7 +182,7 @@
 # Terms of Use
 _Last updated: 8 June 2026_
 
-These Terms of Use ("Terms") govern your use of Hilka Aps applications and website
+These Terms of Use ("Terms") govern your use of Hylka Apps applications and website
 (the "Services"). This is placeholder text for the prototype — replace with the final
 legal document before launch.
 
@@ -199,7 +199,7 @@ Optional paid features are billed through the App Store under Apple's terms.
 The Services are provided "as is" without warranties of any kind.
 
 ## 5. Contact
-Questions? Email hello@hilkaaps.com.
+Questions? Email hello@hylkaapps.com.
 ```
 
 ---
@@ -210,7 +210,7 @@ Questions? Email hello@hilkaaps.com.
 # Privacy Policy
 _Last updated: 8 June 2026_
 
-This Privacy Policy explains how Hilka Aps handles your data. This is placeholder text
+This Privacy Policy explains how Hylka Apps handles your data. This is placeholder text
 for the prototype — replace with the final policy before launch.
 
 ## 1. Data we collect
@@ -223,10 +223,10 @@ We do not sell your data or use third-party advertising trackers.
 We may collect anonymous, aggregated usage stats to improve the app.
 
 ## 4. Your rights
-You can request deletion of any data we hold by emailing hello@hilkaaps.com.
+You can request deletion of any data we hold by emailing hello@hylkaapps.com.
 
 ## 5. Contact
-Privacy questions? Email hello@hilkaaps.com.
+Privacy questions? Email hello@hylkaapps.com.
 ```
 
 ---
@@ -239,9 +239,9 @@ Header / hero only; the rest mirrors the EN keys.
 - Header CTA: **Завантажити**
 - Landing eyebrow: `ІНДІ iOS СТУДІЯ`
 - Landing H1: **Маленькі застосунки, зроблені з турботою.**
-- Landing sub: "Hilka Aps створює прості й продумані iOS-застосунки, що роблять одну справу добре — без зайвого та без шуму."
+- Landing sub: "Hylka Apps створює прості й продумані iOS-застосунки, що роблять одну справу добре — без зайвого та без шуму."
 - Primary CTA: **Переглянути застосунок** · Secondary: **Про нас**
-- Footer copyright: `© 2026 Hilka Aps · Усі права захищено.`
+- Footer copyright: `© 2026 Hylka Apps · Усі права захищено.`
 
 > Every other EN string above has a matching `uk` value in the translation files
 > (same keys). Fill them when the real content is finalized.
