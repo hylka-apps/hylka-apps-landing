@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hilka Aps — Small, considered iOS apps.</title>
+  <meta name="description" content="Hilka Aps — small, considered iOS apps.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <script>window.HILKA_PAGE = { active: "apps" };</script>
+
+  <style id="lp">
+    :root {
+      --display: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+      --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+    }
+
+    /* let decorative plates bleed past the viewport without a scrollbar */
+    html, body { overflow-x: clip; }
+
+    /* ====================================================
+       SHOWCASE / HERO
+       ==================================================== */
+    .showcase {
+      position: relative;
+      isolation: isolate;
+      padding: clamp(72px, 12vh, 150px) 0 clamp(80px, 12vh, 140px);
+      background:
+        radial-gradient(120% 90% at 50% -10%, #EAF3FF 0%, rgba(234,243,255,0) 55%),
+        radial-gradient(80% 60% at 88% 8%, #FFF1E6 0%, rgba(255,241,230,0) 50%),
+        radial-gradient(70% 60% at 10% 18%, #F3ECFF 0%, rgba(243,236,255,0) 55%),
+        #FBFBFD;
+      overflow: clip;
+    }
+    /* fine grid texture */
+    .showcase::before {
+      content: "";
+      position: absolute; inset: 0; z-index: -2;
+      background-image:
+        linear-gradient(rgba(16,16,16,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,16,16,.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(75% 65% at 50% 35%, #000 0%, transparent 75%);
+      -webkit-mask-image: radial-gradient(75% 65% at 50% 35%, #000 0%, transparent 75%);
+    }
+
+    .showcase-inner {
+      position: relative; z-index: 3;
+      max-width: 980px; margin: 0 auto;
+      padding: 0 24px; text-align: center;
+    }
+
+    .lp-eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--display);
+      font-size: 13px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: #0A0A0A;
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(16,16,16,.1);
+      padding: 9px 16px 9px 12px; border-radius: 100px;
+      white-space: nowrap;
+      box-shadow: 0 1px 2px rgba(16,16,16,.04);
+      backdrop-filter: blur(8px);
+      margin-bottom: clamp(26px, 4vh, 40px);
+    }
+    .lp-eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--acc-green); box-shadow: 0 0 0 4px rgba(52,199,89,.18); }
+
+    .lp-h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(52px, 10.5vw, 132px);
+      line-height: .9;
+      letter-spacing: -3px;
+      color: #0A0A0A;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .lp-h1 .serif {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -1px;
+      background: linear-gradient(100deg, #0088FF 0%, #AF52DE 60%, #FF7A3D 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      padding-right: .06em;
+    }
+    .lp-h1 .ln { display: block; }
+
+    .lp-sub {
+      max-width: 600px; margin: clamp(22px, 3.4vh, 34px) auto 0;
+      font-size: clamp(18px, 2.1vw, 21px); line-height: 1.5;
+      color: #55555C; font-weight: 400;
+    }
+
+    .lp-cta-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: clamp(28px, 4vh, 40px); }
+    .lp-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--display); font-size: 17px; font-weight: 600; line-height: 1;
+      padding: 16px 28px; border-radius: 100px; cursor: pointer; border: 1px solid transparent;
+      transition: transform .16s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .lp-btn-primary { background: #0A0A0A; color: #fff; box-shadow: 0 8px 24px rgba(16,16,16,.18); }
+    .lp-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(16,16,16,.26); }
+    .lp-btn-ghost { background: rgba(255,255,255,.72); color: #0A0A0A; border-color: rgba(16,16,16,.12); backdrop-filter: blur(8px); }
+    .lp-btn-ghost:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 8px 22px rgba(16,16,16,.1); }
+    .lp-btn .arr { transition: transform .2s ease; }
+    .lp-btn:hover .arr { transform: translateX(3px); }
+
+    /* ---- decorative vivid plates ---- */
+    .plates { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+    .plate {
+      position: absolute;
+      border-radius: 22px;
+      box-shadow: 0 30px 60px -18px rgba(16,16,30,.35), 0 6px 16px rgba(16,16,30,.12), inset 0 0 0 1px rgba(255,255,255,.22);
+      color: #fff; overflow: hidden;
+      opacity: 1; transform: rotate(var(--rot, 0deg));
+    }
+    .plate .plate-float { position: absolute; inset: 0; animation: float 7s ease-in-out infinite; }
+    .plate .pl-pad { position: relative; height: 100%; padding: 16px 18px; display: flex; flex-direction: column; }
+    .plate .pl-label { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: .4px; opacity: .92; }
+    .plate .pl-sub { font-size: 11px; opacity: .8; margin-top: 1px; }
+
+    @keyframes plateIn { from { opacity: 0; transform: translateY(34px) scale(.9) rotate(var(--rot,0deg)); } to { opacity: 1; transform: translateY(0) scale(1) rotate(var(--rot,0deg)); } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+    /* individual plates */
+    .plate.p-timer  { top: 6%;  right: -46px; width: 218px; height: 150px; --rot: 7deg;  background: linear-gradient(160deg, #0A84FF, #4FB0FF); animation-delay: .05s; }
+    .plate.p-stats  { top: 30%; left: -58px;  width: 200px; height: 184px; --rot: -8deg; background: linear-gradient(160deg, #9B4DEB, #C77DFF); animation-delay: .18s; }
+    .plate.p-sounds { bottom: 4%; right: 2%;  width: 196px; height: 132px; --rot: -6deg; background: linear-gradient(160deg, #19B559, #5FE08A); animation-delay: .3s; }
+    .plate.p-icon   { bottom: 8%; left: 4%;   width: 132px; height: 132px; --rot: 6deg;  background: linear-gradient(155deg, #FF8A33, #FFB066); animation-delay: .42s; }
+
+    .plate .big-time { font-family: var(--display); font-weight: 800; font-size: 46px; letter-spacing: -2px; margin-top: auto; line-height: 1; }
+    /* stats bars */
+    .bars { display: flex; align-items: flex-end; gap: 7px; height: 70px; margin-top: auto; }
+    .bars i { flex: 1; background: rgba(255,255,255,.85); border-radius: 4px 4px 2px 2px; display: block; }
+    /* sound wave */
+    .wave { display: flex; align-items: center; gap: 5px; height: 46px; margin-top: auto; }
+    .wave i { width: 5px; border-radius: 3px; background: rgba(255,255,255,.9); animation: eq 1.1s ease-in-out infinite; }
+    @keyframes eq { 0%,100% { height: 20%; } 50% { height: 95%; } }
+    .app-tile-emoji { margin: auto; font-size: 56px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.2)); }
+    .plate .live-chip { align-self: flex-start; font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: .4px; background: rgba(255,255,255,.95); color: #0A8A3A; padding: 3px 10px; border-radius: 100px; }
+
+    .scroll-cue { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: clamp(48px, 7vh, 86px); color: #8A8A92; font-family: var(--display); font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+    .scroll-cue .mouse { width: 24px; height: 38px; border: 2px solid #C2C2CC; border-radius: 14px; position: relative; }
+    .scroll-cue .mouse::after { content: ""; position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 4px; height: 7px; background: #B0B0BA; border-radius: 2px; animation: wheel 1.6s ease-in-out infinite; }
+    @keyframes wheel { 0% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 10px); } }
+
+    /* ====================================================
+       APPS — column of wide rich plates
+       ==================================================== */
+    .apps-sec { background: var(--surface); padding: clamp(64px, 9vh, 110px) 0; }
+    .apps-head { max-width: 900px; margin: 0 auto clamp(40px, 6vh, 64px); padding: 0 24px; }
+    .apps-head .lp-eyebrow { background: rgba(255,255,255,.85); }
+    .apps-h2 {
+      font-family: var(--display); font-weight: 800;
+      font-size: clamp(38px, 6.4vw, 76px); line-height: .94; letter-spacing: -2px;
+      color: #0A0A0A; margin: 14px 0 0;
+    }
+
+    .apps-col { max-width: 1120px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: clamp(26px, 4vh, 44px); }
+
+    .appcard {
+      display: grid; grid-template-columns: 1.05fr 1fr; align-items: stretch;
+      background: #fff; border-radius: 28px; overflow: hidden;
+      border: 1px solid rgba(16,16,16,.06);
+      box-shadow: 0 1px 2px rgba(16,16,16,.04), 0 18px 40px -24px rgba(16,16,30,.18);
+      text-decoration: none; color: inherit;
+      /* visible-by-default; entrance animates transform only (never opacity) so a frozen/
+         no-JS/print state still shows the card at full opacity */
+      opacity: 1; transform: none;
+      transition: transform .7s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease;
+      will-change: transform;
+    }
+    .appcard.pre { transform: translateY(40px); }
+    .appcard:hover { transform: translateY(-8px) scale(1.012); box-shadow: 0 30px 70px -28px rgba(16,16,30,.4), 0 8px 20px rgba(16,16,30,.1); }
+    .appcard.pre:hover { transform: translateY(40px); box-shadow: 0 1px 2px rgba(16,16,16,.04), 0 18px 40px -24px rgba(16,16,30,.18); }
+    .appcard:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .appcard.reverse { grid-template-columns: 1fr 1.05fr; }
+    .appcard.reverse .ac-media { order: 2; }
+
+    .ac-media { position: relative; overflow: hidden; min-height: 360px; display: grid; place-items: center; }
+    .ac-media .media-bg { position: absolute; inset: 0; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+    .appcard:hover .ac-media .media-bg { transform: scale(1.06); }
+    .ac-live { position: absolute; top: 18px; left: 18px; z-index: 3; font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: .5px; background: var(--acc-green); color: #fff; padding: 5px 13px; border-radius: 100px; box-shadow: 0 4px 12px rgba(52,199,89,.4); }
+
+    /* phone scene inside media */
+    .ac-scene { position: relative; z-index: 2; display: flex; align-items: center; gap: 18px; padding: 30px; }
+    .ac-phone { width: 168px; aspect-ratio: 1179/2556; border-radius: 30px; background: #0A0A0A; padding: 7px; box-shadow: 0 24px 50px -14px rgba(0,0,0,.45); }
+    .ac-phone .scr { width: 100%; height: 100%; border-radius: 24px; background: linear-gradient(170deg,#0A84FF,#7DBEFF); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; }
+    .ac-phone .scr .t { font-family: var(--display); font-weight: 800; font-size: 38px; letter-spacing: -2px; }
+    .ac-phone .scr .l { font-size: 11px; font-weight: 600; opacity: .85; margin-top: 3px; }
+    .ac-phone .notch2 { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 52px; height: 15px; background: #0A0A0A; border-radius: 9px; z-index: 4; }
+    .ac-minis { display: flex; flex-direction: column; gap: 12px; }
+    .ac-mini { width: 124px; border-radius: 15px; padding: 12px 13px; color: #fff; box-shadow: 0 14px 28px -10px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.18); }
+    .ac-mini .mk { font-family: var(--display); font-size: 11px; font-weight: 700; opacity: .9; }
+    .ac-mini .mv { font-family: var(--display); font-size: 22px; font-weight: 800; letter-spacing: -.5px; margin-top: 2px; }
+
+    .ac-body { padding: clamp(28px, 3.4vw, 48px); display: flex; flex-direction: column; }
+    .ac-kicker { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #8A8A92; white-space: nowrap; }
+    .ac-name { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 3.4vw, 46px); letter-spacing: -1.5px; line-height: 1; margin: 14px 0 0; color: #0A0A0A; }
+    .ac-desc { font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; color: #55555C; margin: 16px 0 0; max-width: 46ch; }
+    .ac-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
+    .ac-chip { font-family: var(--display); font-size: 13px; font-weight: 600; color: #0A0A0A; background: var(--surface); border: 1px solid rgba(16,16,16,.07); padding: 7px 13px; border-radius: 100px; }
+    .ac-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: auto; padding-top: 28px; }
+    .ac-more { font-family: var(--display); font-weight: 700; font-size: 17px; color: var(--blue); display: inline-flex; align-items: center; gap: 7px; }
+    .ac-more .arr { transition: transform .25s ease; }
+    .appcard:hover .ac-more .arr { transform: translateX(5px); }
+
+    /* teaser plate (what's next) */
+    .appcard.teaser { grid-template-columns: 1fr; background: linear-gradient(140deg, #101015, #1C1C24); border: 0; }
+    .appcard.teaser .ac-body { padding: clamp(36px, 4vw, 60px); align-items: flex-start; }
+    .appcard.teaser .ac-kicker { color: #8E8EA8; }
+    .appcard.teaser .ac-name { color: #fff; }
+    .appcard.teaser .ac-desc { color: #B6B6C6; max-width: 56ch; }
+    .appcard.teaser .ac-more { color: #6FB6FF; }
+    .appcard.teaser:hover { transform: translateY(-6px); box-shadow: 0 30px 70px -28px rgba(0,0,0,.55); }
+    .appcard.teaser.pre:hover { transform: translateY(40px); box-shadow: none; }
+    .teaser-dots { display: flex; gap: 9px; margin: 24px 0 4px; }
+    .teaser-dots i { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,.16); }
+    .teaser-dots i:nth-child(1) { background: #0A84FF; }
+    .teaser-dots i:nth-child(2) { background: #AF52DE; }
+    .teaser-dots i:nth-child(3) { background: #FF8A33; }
+
+    /* ====================================================
+       Responsive
+       ==================================================== */
+    @media (max-width: 860px) {
+      .appcard, .appcard.reverse { grid-template-columns: 1fr; }
+      .appcard.reverse .ac-media { order: 0; }
+      .ac-media { min-height: 300px; }
+    }
+    @media (max-width: 560px) {
+      .plate.p-stats, .plate.p-sounds { display: none; }
+      .plate.p-timer { width: 150px; height: 104px; right: -30px; top: 2%; }
+      .plate.p-icon { width: 92px; height: 92px; left: 2%; bottom: 10%; }
+      .plate.p-timer .big-time { font-size: 30px; }
+      .lp-h1 { letter-spacing: -1.5px; }
+      .ac-scene { flex-direction: column; gap: 12px; padding: 26px; }
+      .ac-minis { flex-direction: row; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .plate { animation: plateIn .01s linear forwards; }
+      .plate .plate-float, .wave i, .scroll-cue .mouse::after { animation: none; }
+      .appcard, .appcard.pre { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main data-screen-label="Landing">
+
+    <!-- ============ SHOWCASE ============ -->
+    <section class="showcase" data-screen-label="Showcase">
+      <!-- decorative vivid plates bleeding off the edges -->
+      <div class="plates" aria-hidden="true">
+        <div class="plate p-timer">
+          <div class="plate-float"><div class="pl-pad">
+            <div class="pl-label">Deep work</div>
+            <div class="pl-sub">Session · in flow</div>
+            <div class="big-time">24:00</div>
+          </div></div>
+        </div>
+        <div class="plate p-stats">
+          <div class="plate-float"><div class="pl-pad">
+            <div class="pl-label">This week</div>
+            <div class="pl-sub">+38% focus</div>
+            <div class="bars"><i style="height:42%"></i><i style="height:66%"></i><i style="height:50%"></i><i style="height:88%"></i><i style="height:72%"></i><i style="height:100%"></i></div>
+          </div></div>
+        </div>
+        <div class="plate p-sounds">
+          <div class="plate-float"><div class="pl-pad">
+            <div class="pl-label">Focus sounds</div>
+            <div class="pl-sub">Rainfall · 🎧</div>
+            <div class="wave"><i style="animation-delay:0s"></i><i style="animation-delay:.15s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.4s"></i><i style="animation-delay:.25s"></i><i style="animation-delay:.5s"></i><i style="animation-delay:.2s"></i></div>
+          </div></div>
+        </div>
+        <div class="plate p-icon">
+          <div class="plate-float"><div class="pl-pad">
+            <div class="live-chip">LIVE</div>
+            <div class="app-tile-emoji">⏱️</div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="showcase-inner">
+        <span class="lp-eyebrow"><span class="dot"></span><span data-i18n="home.eyebrow">Indie iOS studio</span></span>
+        <h1 class="lp-h1">
+          <span class="ln">Small apps,</span>
+          <span class="ln">made with <span class="serif">care</span>.</span>
+        </h1>
+        <p class="lp-sub" data-i18n="home.sub">Hilka Aps builds focused, beautifully simple iOS apps that do one thing well — no clutter, no noise.</p>
+        <div class="lp-cta-row">
+          <a class="lp-btn lp-btn-primary" href="#apps" data-i18n="home.cta1">Explore the App</a>
+          <a class="lp-btn lp-btn-ghost" href="about.html" data-i18n="home.cta2">About us <span class="arr">→</span></a>
+        </div>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true">
+        <span class="mouse"></span>
+        <span>Our apps</span>
+      </div>
+    </section>
+
+    <!-- ============ APPS — wide rich plates ============ -->
+    <section class="apps-sec" id="apps">
+      <div class="apps-head center">
+        <span class="lp-eyebrow"><span class="dot" style="background:var(--acc-coral);box-shadow:0 0 0 4px rgba(229,84,75,.18)"></span>Our apps</span>
+        <h2 class="apps-h2">One app, done right.</h2>
+      </div>
+
+      <div class="apps-col">
+
+        <!-- Focusly — rich wide plate, fully tappable -->
+        <a class="appcard reveal" href="focusly.html" aria-label="Focusly — learn more">
+          <div class="ac-media">
+            <div class="media-bg" style="background:linear-gradient(150deg,#0A84FF 0%,#5AA9FF 55%,#8EC5FF 100%)"></div>
+            <span class="ac-live">LIVE</span>
+            <div class="ac-scene">
+              <div class="ac-phone">
+                <div class="notch2"></div>
+                <div class="scr"><div class="t">24:00</div><div class="l">Deep work</div></div>
+              </div>
+              <div class="ac-minis">
+                <div class="ac-mini" style="background:linear-gradient(150deg,#9B4DEB,#C77DFF)"><div class="mk">🔥 Streak</div><div class="mv">12 days</div></div>
+                <div class="ac-mini" style="background:linear-gradient(150deg,#19B559,#5FE08A)"><div class="mk">⏱ Today</div><div class="mv">3h 40m</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="ac-body">
+            <span class="ac-kicker">iOS · Productivity</span>
+            <h3 class="ac-name">Focusly</h3>
+            <p class="ac-desc">A calm focus timer that turns scattered hours into deep, distraction-free work. Set a session, mute the noise, and watch your streak grow — Focusly keeps you in flow without the guilt-trip gamification. Just you, the work, and a quiet timer.</p>
+            <div class="ac-chips">
+              <span class="ac-chip">Smart timer</span>
+              <span class="ac-chip">Focus sounds</span>
+              <span class="ac-chip">Streaks &amp; stats</span>
+              <span class="ac-chip">iCloud sync</span>
+            </div>
+            <div class="ac-foot">
+              <span class="appstore" role="img" aria-label="Download on the App Store">
+                <svg viewBox="0 0 24 24" fill="#fff"><path d="M16.36 12.78c-.02-2.06 1.68-3.05 1.76-3.1-0.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.04 8.23.69.99 1.51 2.1 2.58 2.06 1.04-.04 1.43-.67 2.69-.67 1.25 0 1.61.67 2.7.65 1.12-.02 1.82-1 2.5-2 .79-1.15 1.11-2.26 1.13-2.32-.02-.01-2.17-.83-2.19-3.3zM14.3 6.6c.57-.69.95-1.65.85-2.6-.82.03-1.81.55-2.4 1.23-.53.61-.99 1.58-.86 2.51.91.07 1.84-.46 2.41-1.14z"/></svg>
+                <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
+              </span>
+              <span class="ac-more">Learn more <span class="arr">→</span></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- What's next — honest teaser plate, keeps the column in rhythm -->
+        <a class="appcard teaser reveal" href="contact.html" aria-label="Hear about the next Hilka app">
+          <div class="ac-body">
+            <span class="ac-kicker">In the works</span>
+            <h3 class="ac-name">The next one is taking shape.</h3>
+            <p class="ac-desc">We build slowly and deliberately — one focused app at a time. Something new is on the workbench. Be the first to know when it lands.</p>
+            <div class="teaser-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="ac-foot">
+              <span class="ac-more">Get in touch <span class="arr">→</span></span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ============ CLOSING CTA BAND ============ -->
+    <section class="section white">
+      <div class="wrap">
+        <div class="cta-band accent">
+          <h2 class="h2" style="color:#fff">Less noise. More focus.</h2>
+          <p class="lead" style="margin:14px auto 30px;max-width:480px">Try the app that keeps you in flow.</p>
+          <div class="btn-row" style="justify-content:center">
+            <a class="appstore" href="https://apps.apple.com/app/id000000000" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="#fff"><path d="M16.36 12.78c-.02-2.06 1.68-3.05 1.76-3.1-0.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.04 8.23.69.99 1.51 2.1 2.58 2.06 1.04-.04 1.43-.67 2.69-.67 1.25 0 1.61.67 2.7.65 1.12-.02 1.82-1 2.5-2 .79-1.15 1.11-2.26 1.13-2.32-.02-.01-2.17-.83-2.19-3.3zM14.3 6.6c.57-.69.95-1.65.85-2.6-.82.03-1.81.55-2.4 1.23-.53.61-.99 1.58-.86 2.51.91.07 1.84-.46 2.41-1.14z"/></svg>
+              <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="i18n.js"></script>
+  <script src="site.js"></script>
+  <script>
+    // scroll-reveal for the wide app plates — visible by default; only hide-then-reveal when we can observe
+    (function () {
+      var cards = document.querySelectorAll(".appcard");
+      if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      cards.forEach(function (c) { c.classList.add("pre"); });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.remove("pre"); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+      cards.forEach(function (c) { io.observe(c); });
+    })();
+  </script>
+</body>
+</html>
