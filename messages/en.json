@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "apps": "Apps",
+    "more": "More",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "header": {
+    "cta": "Get the App",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language"
+  },
+  "footer": {
+    "tagline": "Small, considered iOS apps.",
+    "cols": {
+      "apps": "Apps",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "links": {
+      "about": "About",
+      "more": "More",
+      "contact": "Contact",
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy"
+    },
+    "copyright": "© 2026 Hilka Aps · All rights reserved.",
+    "legalnote": "Made with care for the things that matter."
+  },
+  "home": {
+    "meta": {
+      "title": "Hilka Aps — Small, considered iOS apps.",
+      "description": "Hilka Aps — small, considered iOS apps."
+    },
+    "eyebrow": "Indie iOS studio",
+    "h1": "Small apps, made with <serif>care</serif>.",
+    "sub": "Hilka Aps builds focused, beautifully simple iOS apps that do one thing well — no clutter, no noise.",
+    "cta1": "Explore the App",
+    "cta2": "About us",
+    "scrollCue": "Our apps",
+    "apps": {
+      "eyebrow": "Our apps",
+      "h2": "One app, done right.",
+      "live": "LIVE",
+      "focusly": {
+        "kicker": "iOS · Productivity",
+        "name": "Focusly",
+        "desc": "A calm focus timer that turns scattered hours into deep, distraction-free work. Set a session, mute the noise, and watch your streak grow — Focusly keeps you in flow without the guilt-trip gamification. Just you, the work, and a quiet timer.",
+        "chips": {
+          "timer": "Smart timer",
+          "sounds": "Focus sounds",
+          "stats": "Streaks & stats",
+          "sync": "iCloud sync"
+        },
+        "more": "Learn more"
+      },
+      "teaser": {
+        "kicker": "In the works",
+        "name": "The next one is taking shape.",
+        "desc": "We build slowly and deliberately — one focused app at a time. Something new is on the workbench. Be the first to know when it lands.",
+        "more": "Get in touch"
+      }
+    },
+    "cta": {
+      "h2": "Less noise. More focus.",
+      "sub": "Try the app that keeps you in flow."
+    }
+  },
+  "appstore": {
+    "small": "Download on the",
+    "big": "App Store"
+  }
+}
