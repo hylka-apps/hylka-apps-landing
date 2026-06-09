@@ -1,0 +1,13 @@
+.contact-hero {
+  padding-top: clamp(72px, 10vh, 120px);
+  padding-bottom: clamp(56px, 8vh, 96px);
+}
+.contact-h1 {
+  margin-top: 12px;
+}
+.contact-serif {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--acc-green);
+}

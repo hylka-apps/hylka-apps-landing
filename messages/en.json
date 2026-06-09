@@ -70,5 +70,265 @@
   "appstore": {
     "small": "Download on the",
     "big": "App Store"
+  },
+  "focusly": {
+    "meta": {
+      "title": "Focusly — Focus that finally sticks. · Hilka Aps",
+      "description": "Focusly — a calm focus timer that turns scattered hours into deep, distraction-free work."
+    },
+    "hero": {
+      "eyebrow": "Deep work, made simple",
+      "h1": "Focus that finally <serif>sticks.</serif>",
+      "sub": "Set a session, silence the noise, and watch your deep-work streak grow. Focusly keeps you in flow — no clutter, no guilt.",
+      "cta1": "Download on the App Store",
+      "cta2": "How it works"
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "h2": "Three steps to deep work.",
+      "steps": [
+        {
+          "label": "Step 01",
+          "title": "Set",
+          "desc": "Pick a focus length and what you're working on. One tap to begin."
+        },
+        {
+          "label": "Step 02",
+          "title": "Flow",
+          "desc": "Distractions go quiet. A gentle timer keeps you anchored in the task."
+        },
+        {
+          "label": "Step 03",
+          "title": "Review",
+          "desc": "See your streaks, focused hours, and best times of day at a glance."
+        }
+      ]
+    },
+    "interactive": {
+      "h2": "Try a one-minute focus",
+      "inputPlaceholder": "What will you focus on?",
+      "chips": ["Custom timer", "Focus sounds", "Streaks", "Distraction shield"]
+    },
+    "preview": {
+      "eyebrow": "App preview",
+      "h2": "A calm, quiet interface.",
+      "screens": ["Timer", "Stats", "Settings"]
+    },
+    "stat": {
+      "number": "12,000+",
+      "label": "focused hours logged by early users",
+      "cta": "Start your first session"
+    },
+    "features": {
+      "eyebrow": "Features",
+      "h2": "Everything you need to focus.",
+      "items": [
+        {
+          "icon": "⏱",
+          "title": "Smart Timer",
+          "desc": "Pomodoro, custom, or open-ended sessions that adapt to you."
+        },
+        {
+          "icon": "🎧",
+          "title": "Focus Sounds",
+          "desc": "Curated ambient soundscapes to settle your mind."
+        },
+        {
+          "icon": "🔥",
+          "title": "Streaks & Stats",
+          "desc": "Track daily streaks and weekly deep-work totals."
+        },
+        {
+          "icon": "🔕",
+          "title": "Distraction Shield",
+          "desc": "Mutes notifications automatically while you focus."
+        },
+        {
+          "icon": "🏷",
+          "title": "Session Tags",
+          "desc": "Label sessions by project and see where your time goes."
+        },
+        {
+          "icon": "☁️",
+          "title": "iCloud Sync",
+          "desc": "Your history follows you across iPhone and iPad."
+        }
+      ]
+    },
+    "articles": {
+      "eyebrow": "From the blog",
+      "h2": "Thinking about focus.",
+      "items": [
+        {
+          "icon": "🧠",
+          "title": "The science of deep work",
+          "excerpt": "Why uninterrupted focus beats multitasking every time."
+        },
+        {
+          "icon": "🌙",
+          "title": "Build a focus habit",
+          "excerpt": "A simple routine to make daily deep work automatic."
+        },
+        {
+          "icon": "🎯",
+          "title": "Beat distraction",
+          "excerpt": "Practical ways to protect your attention in a noisy world."
+        }
+      ],
+      "readMore": "Read more"
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "h2": "Common questions.",
+      "items": [
+        {
+          "q": "Is Focusly free?",
+          "a": "Focusly is free to download with an optional Pro upgrade for advanced stats and sounds."
+        },
+        {
+          "q": "Does it work offline?",
+          "a": "Yes. Focusly runs fully offline; iCloud sync kicks in when you're back online."
+        },
+        {
+          "q": "Can I customize session length?",
+          "a": "Absolutely — from 1 minute to several hours, or open-ended."
+        },
+        {
+          "q": "Will it sync across devices?",
+          "a": "Yes, via iCloud across iPhone and iPad."
+        }
+      ]
+    },
+    "testimonials": {
+      "eyebrow": "What users say",
+      "h2": "Loved by people who focus.",
+      "items": [
+        {
+          "quote": "Focusly is the first timer I've actually stuck with.",
+          "name": "Maya R."
+        },
+        {
+          "quote": "It's quiet, pretty, and gets out of my way. Perfect.",
+          "name": "Daniel K."
+        },
+        {
+          "quote": "My deep-work hours doubled in two weeks.",
+          "name": "Priya S."
+        }
+      ]
+    },
+    "cta": {
+      "h2": "Start your first focus session today.",
+      "cta": "Download on the App Store"
+    }
+  },
+  "about": {
+    "meta": {
+      "title": "About · Hilka Aps",
+      "description": "Hilka Aps is a tiny studio making focused iOS apps for everyday life."
+    },
+    "eyebrow": "About",
+    "h1": "An indie iOS <serif>studio.</serif>",
+    "lead": "Hilka Aps is a tiny studio making focused iOS apps for everyday life.",
+    "story": "We believe the best software does less, better. Every Hilka app starts with one clear job and a calm, uncluttered interface — then we sweat the details until it feels effortless. No dark patterns, no noise, no upsell maze. Just small, honest tools we'd want to use ourselves.",
+    "values": {
+      "h2": "What we stand for.",
+      "items": [
+        {
+          "icon": "✦",
+          "title": "Simple",
+          "desc": "One job. Done well. No feature creep."
+        },
+        {
+          "icon": "🔒",
+          "title": "Private by default",
+          "desc": "Your data stays on your device."
+        },
+        {
+          "icon": "🤍",
+          "title": "Made with care",
+          "desc": "Every detail sweated until it feels effortless."
+        }
+      ]
+    },
+    "cta": {
+      "h2": "See what we've built.",
+      "cta": "Explore Focusly"
+    }
+  },
+  "more": {
+    "meta": {
+      "title": "More · Hilka Aps",
+      "description": "More from Hilka Aps — apps, company, legal."
+    },
+    "eyebrow": "More",
+    "h1": "More from Hilka Aps.",
+    "intro": "A few extra things — what we're working on and how to reach us.",
+    "sections": {
+      "apps": {
+        "title": "Apps",
+        "links": [
+          { "label": "Focusly", "href": "/apps/focusly" }
+        ]
+      },
+      "company": {
+        "title": "Company",
+        "links": [
+          { "label": "About", "href": "/about" },
+          { "label": "Contact", "href": "/contact" }
+        ]
+      },
+      "legal": {
+        "title": "Legal",
+        "links": [
+          { "label": "Terms of Use", "href": "/terms" },
+          { "label": "Privacy Policy", "href": "/privacy" }
+        ]
+      }
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact · Hilka Aps",
+      "description": "Get in touch with Hilka Aps — we'd love your feedback."
+    },
+    "eyebrow": "Get in touch",
+    "h1": "We'd love your <serif>feedback.</serif>",
+    "intro": "Have an idea or hit a snag? Tell us — we read everything.",
+    "tabs": {
+      "suggestion": "Suggest a feature",
+      "complaint": "Report a problem"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "Short summary (optional)",
+      "message": "Message",
+      "messagePlaceholder": "Tell us more…",
+      "submit": "Send message",
+      "charCount": "{count}/500"
+    },
+    "success": "Thanks! Your message is on its way to us.",
+    "error": "Something went wrong — please try again or email hello@hilkaaps.com.",
+    "emailLine": "Prefer email? Reach us at"
+  },
+  "terms": {
+    "meta": {
+      "title": "Terms of Use · Hilka Aps",
+      "description": "Terms of Use for Hilka Aps applications and website."
+    },
+    "h1": "Terms of Use",
+    "updated": "Last updated: 8 June 2026"
+  },
+  "privacy": {
+    "meta": {
+      "title": "Privacy Policy · Hilka Aps",
+      "description": "Privacy Policy for Hilka Aps applications and website."
+    },
+    "h1": "Privacy Policy",
+    "updated": "Last updated: 8 June 2026"
   }
 }

@@ -1,0 +1,121 @@
+.cf-wrap {
+  max-width: 580px;
+}
+
+.cf-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.cf-tab {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1.5px solid var(--hairline);
+  border-radius: var(--r-card);
+  background: #fff;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+  text-align: center;
+}
+.cf-tab.sel {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: rgba(0, 136, 255, 0.05);
+}
+
+.cf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cf-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 520px) {
+  .cf-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+.cf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cf-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.cf-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.cf-counter {
+  font-size: 12px;
+  color: var(--muted);
+}
+.cf-counter.over {
+  color: var(--acc-coral);
+}
+.cf-field input,
+.cf-field textarea {
+  background: #fff;
+  border: 1.5px solid var(--hairline);
+  border-radius: var(--r-input);
+  font-family: var(--font);
+  font-size: 16px;
+  color: var(--text);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.18s ease;
+  resize: vertical;
+}
+.cf-field input:focus,
+.cf-field textarea:focus {
+  border-color: var(--blue);
+}
+.cf-field input::placeholder,
+.cf-field textarea::placeholder {
+  color: var(--muted-2);
+}
+
+.cf-status {
+  padding: 14px 18px;
+  border-radius: var(--r-input);
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cf-status.success {
+  background: rgba(52, 199, 89, 0.1);
+  color: #1a7a38;
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  font-size: 17px;
+  padding: 24px 28px;
+}
+.cf-status.error {
+  background: rgba(229, 84, 75, 0.08);
+  color: #b03024;
+  border: 1px solid rgba(229, 84, 75, 0.25);
+}
+
+.cf-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+.cf-email-line {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}

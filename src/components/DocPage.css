@@ -1,0 +1,35 @@
+.doc-header {
+  padding-top: clamp(72px, 10vh, 120px);
+  padding-bottom: 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.doc-wrap {
+  max-width: var(--maxw-doc);
+}
+.doc-updated {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 8px 0 40px;
+}
+.doc-intro {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.65;
+  margin: 0 0 36px;
+}
+.doc-section {
+  margin-bottom: 36px;
+}
+.doc-h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin: 0 0 10px;
+  color: var(--text);
+}
+.doc-section p {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #444;
+  margin: 0 0 12px;
+}

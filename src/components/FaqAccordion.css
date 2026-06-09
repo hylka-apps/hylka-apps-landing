@@ -1,0 +1,71 @@
+.faq-accordion {
+  border-top: 1px solid var(--hairline);
+}
+.faq-item {
+  border-bottom: 1px solid var(--hairline);
+}
+.faq-q {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.faq-pm {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+.faq-pm::before,
+.faq-pm::after {
+  content: "";
+  position: absolute;
+  background: var(--blue);
+  border-radius: 2px;
+}
+.faq-pm::before {
+  top: 11px;
+  left: 3px;
+  right: 3px;
+  height: 2px;
+}
+.faq-pm::after {
+  left: 11px;
+  top: 3px;
+  bottom: 3px;
+  width: 2px;
+  transition: opacity 0.25s ease;
+}
+.faq-item.open .faq-pm::after {
+  opacity: 0;
+}
+
+.faq-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.faq-item.open .faq-a {
+  grid-template-rows: 1fr;
+}
+.faq-a > * {
+  overflow: hidden;
+}
+.faq-a p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 22px;
+  max-width: 54ch;
+}
