@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 type ContactPayload = {
   name: string;
@@ -8,6 +9,10 @@ type ContactPayload = {
   type: "suggestion" | "complaint";
 };
 
+// TODO: change FROM to noreply@hylkaapps.com after domain is verified in Resend
+const TO = "milagalko1@gmail.com";
+const FROM = "Hylka Apps <onboarding@resend.dev>";
+
 export async function POST(request: Request) {
   const body = (await request.json()) as ContactPayload;
 
@@ -15,11 +20,29 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  // TODO: wire up Resend — deliver to contact@hylkaapps.com
-  // const resend = new Resend(process.env.RESEND_API_KEY);
-  // await resend.emails.send({ from: ..., to: "contact@hylkaapps.com", ... });
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json({ error: "Email service not configured" }, { status: 503 });
+  }
 
-  console.log("Contact form submission:", body);
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  const label = body.type === "complaint" ? "Complaint" : "Suggestion";
+  const subject = body.subject
+    ? `[${label}] ${body.subject}`
+    : `[${label}] from ${body.name}`;
+
+  const { error } = await resend.emails.send({
+    from: FROM,
+    to: TO,
+    replyTo: body.email,
+    subject,
+    text: `From: ${body.name} <${body.email}>\nType: ${label}\n\n${body.message}`,
+  });
+
+  if (error) {
+    console.error("Resend error:", error);
+    return NextResponse.json({ error: "Failed to send" }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }
