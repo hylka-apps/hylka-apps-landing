@@ -5,6 +5,10 @@
     "about": "About",
     "contact": "Contact"
   },
+  "appPage": {
+    "howItWorks": "How it works",
+    "contact": "Contact us"
+  },
   "header": {
     "cta": "Get the App",
     "openMenu": "Open menu",
@@ -43,6 +47,7 @@
       "eyebrow": "Our apps",
       "h2": "One app, done right.",
       "live": "LIVE",
+      "learnMore": "Learn more",
       "focusly": {
         "kicker": "iOS · Productivity",
         "name": "Focusly",

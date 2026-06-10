@@ -1,13 +1,41 @@
 import { getSanityClient, isSanityConfigured } from "./client";
 import { urlFor } from "./image";
 
-type Localized = { en: string; uk: string };
+export type Loc = { en?: string; uk?: string };
+
+// ── App page sections (polymorphic, ordered in Studio) ────────────────
+export type AppSection =
+  | { _type: "howItWorksSection"; _key: string; eyebrow?: Loc; heading?: Loc; steps?: { label?: Loc; title?: Loc; desc?: Loc }[] }
+  | { _type: "statSection"; _key: string; number?: string; label?: Loc }
+  | { _type: "featuresSection"; _key: string; eyebrow?: Loc; heading?: Loc; items?: { icon?: string; title?: Loc; desc?: Loc }[] }
+  | { _type: "articlesSection"; _key: string; eyebrow?: Loc; heading?: Loc; items?: { icon?: string; title?: Loc; excerpt?: Loc }[] }
+  | { _type: "testimonialsSection"; _key: string; eyebrow?: Loc; heading?: Loc; items?: { quote?: Loc; name?: string }[] }
+  | { _type: "faqSection"; _key: string; eyebrow?: Loc; heading?: Loc; items?: { q?: Loc; a?: Loc }[] }
+  | { _type: "ctaSection"; _key: string; heading?: Loc };
 
 export type SanityApp = {
-  appStoreUrl: string | null;
-  features: Array<{ icon: string; title: Localized; desc: Localized }> | null;
-  faq: Array<{ q: Localized; a: Localized }> | null;
-  testimonials: Array<{ quote: Localized; name: string }> | null;
+  slug: string;
+  name?: Loc;
+  kicker?: Loc;
+  heroH1?: Loc;
+  heroH1Accent?: Loc;
+  heroSubtitle?: Loc;
+  appStoreUrl?: string | null;
+  iconUrl?: string | null;
+  cardDescription?: Loc;
+  cardChips?: { label?: Loc }[];
+  sections?: AppSection[];
+};
+
+// Lightweight shape for the landing grid + static params
+export type SanityAppCard = {
+  slug: string;
+  name?: Loc;
+  kicker?: Loc;
+  cardDescription?: Loc;
+  cardChips?: { label?: Loc }[];
+  appStoreUrl?: string | null;
+  iconUrl?: string | null;
 };
 
 export type SanityLegalDoc = {
@@ -25,16 +53,34 @@ export type SanitySiteSettings = {
 
 const REVALIDATE = { next: { revalidate: 3600 } } as const;
 
+const APP_FIELDS = `
+  "slug": slug.current,
+  name, kicker, heroH1, heroH1Accent, heroSubtitle, appStoreUrl,
+  "iconUrl": icon.asset->url,
+  cardDescription, cardChips,
+  sections
+`;
+
+const CARD_FIELDS = `
+  "slug": slug.current,
+  name, kicker, cardDescription, cardChips, appStoreUrl,
+  "iconUrl": icon.asset->url
+`;
+
 export async function getApp(slug: string): Promise<SanityApp | null> {
   if (!isSanityConfigured()) return null;
   return getSanityClient().fetch(
-    `*[_type == "app" && slug.current == $slug][0]{
-      appStoreUrl,
-      features[]{icon, title, desc},
-      faq[]{q, a},
-      testimonials[]{quote, name}
-    }`,
+    `*[_type == "app" && slug.current == $slug][0]{${APP_FIELDS}}`,
     { slug },
+    REVALIDATE
+  );
+}
+
+export async function getAllApps(): Promise<SanityAppCard[]> {
+  if (!isSanityConfigured()) return [];
+  return getSanityClient().fetch(
+    `*[_type == "app" && defined(slug.current)] | order(_createdAt asc){${CARD_FIELDS}}`,
+    {},
     REVALIDATE
   );
 }

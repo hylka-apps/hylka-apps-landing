@@ -1,10 +1,16 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
-import { getApp } from "@/sanity/lib/queries";
+import { getAllApps, type Loc } from "@/sanity/lib/queries";
 import "./landing.css";
 
 const APP_STORE_URL_FALLBACK = "https://apps.apple.com/app/id000000000";
+
+const CARD_GRADIENTS = [
+  "linear-gradient(150deg,#0A84FF 0%,#5AA9FF 55%,#8EC5FF 100%)",
+  "linear-gradient(150deg,#9B4DEB 0%,#C77DFF 55%,#E0B8FF 100%)",
+  "linear-gradient(150deg,#19B559 0%,#5FE08A 55%,#A8F0C2 100%)",
+];
 
 export default async function LandingPage({
   params,
@@ -14,8 +20,11 @@ export default async function LandingPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
-  const cmsApp = await getApp("focusly");
-  const APP_STORE_URL = cmsApp?.appStoreUrl ?? APP_STORE_URL_FALLBACK;
+  const lang = locale as "en" | "uk";
+  const pick = (loc?: Loc) => (loc?.[lang] ?? loc?.en ?? "").toString();
+
+  const apps = await getAllApps();
+  const APP_STORE_URL = apps[0]?.appStoreUrl ?? APP_STORE_URL_FALLBACK;
 
   return (
     <div className="landing-page">
@@ -114,52 +123,53 @@ export default async function LandingPage({
         </div>
 
         <div className="apps-col">
-          {/* Focusly — rich wide plate, fully tappable */}
-          <Link className="appcard" href="/apps/focusly" aria-label={`${t("apps.focusly.name")} — ${t("apps.focusly.more")}`}>
-            <div className="ac-media">
-              <div
-                className="media-bg"
-                style={{ background: "linear-gradient(150deg,#0A84FF 0%,#5AA9FF 55%,#8EC5FF 100%)" }}
-              />
-              <span className="ac-live">{t("apps.live")}</span>
-              <div className="ac-scene">
-                <div className="ac-phone">
-                  <div className="notch2" />
-                  <div className="scr">
-                    <div className="t">24:00</div>
-                    <div className="l">Deep work</div>
+          {/* Apps — rendered from CMS (add a new App in Studio → card appears) */}
+          {apps.map((app, i) => (
+            <Link
+              key={app.slug}
+              className="appcard"
+              href={`/apps/${app.slug}`}
+              aria-label={`${pick(app.name)} — ${t("apps.learnMore")}`}
+            >
+              <div className="ac-media">
+                <div
+                  className="media-bg"
+                  style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}
+                />
+                <span className="ac-live">{t("apps.live")}</span>
+                {app.iconUrl ? (
+                  <div className="ac-scene">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={app.iconUrl}
+                      alt=""
+                      width={128}
+                      height={128}
+                      style={{ borderRadius: 28, boxShadow: "0 24px 60px rgba(0,0,0,.28)" }}
+                    />
                   </div>
+                ) : null}
+              </div>
+              <div className="ac-body">
+                <span className="ac-kicker">{pick(app.kicker)}</span>
+                <h3 className="ac-name">{pick(app.name)}</h3>
+                <p className="ac-desc">{pick(app.cardDescription)}</p>
+                <div className="ac-chips">
+                  {(app.cardChips ?? []).map((c, j) => (
+                    <span key={j} className="ac-chip">
+                      {pick(c.label)}
+                    </span>
+                  ))}
                 </div>
-                <div className="ac-minis">
-                  <div className="ac-mini" style={{ background: "linear-gradient(150deg,#9B4DEB,#C77DFF)" }}>
-                    <div className="mk">🔥 Streak</div>
-                    <div className="mv">12 days</div>
-                  </div>
-                  <div className="ac-mini" style={{ background: "linear-gradient(150deg,#19B559,#5FE08A)" }}>
-                    <div className="mk">⏱ Today</div>
-                    <div className="mv">3h 40m</div>
-                  </div>
+                <div className="ac-foot">
+                  <AppStoreBadge />
+                  <span className="ac-more">
+                    {t("apps.learnMore")} <span className="arr">→</span>
+                  </span>
                 </div>
               </div>
-            </div>
-            <div className="ac-body">
-              <span className="ac-kicker">{t("apps.focusly.kicker")}</span>
-              <h3 className="ac-name">{t("apps.focusly.name")}</h3>
-              <p className="ac-desc">{t("apps.focusly.desc")}</p>
-              <div className="ac-chips">
-                <span className="ac-chip">{t("apps.focusly.chips.timer")}</span>
-                <span className="ac-chip">{t("apps.focusly.chips.sounds")}</span>
-                <span className="ac-chip">{t("apps.focusly.chips.stats")}</span>
-                <span className="ac-chip">{t("apps.focusly.chips.sync")}</span>
-              </div>
-              <div className="ac-foot">
-                <AppStoreBadge />
-                <span className="ac-more">
-                  {t("apps.focusly.more")} <span className="arr">→</span>
-                </span>
-              </div>
-            </div>
-          </Link>
+            </Link>
+          ))}
 
           {/* What's next — honest teaser plate */}
           <Link className="appcard teaser" href="/contact" aria-label={t("apps.teaser.more")}>
