@@ -1,19 +1,37 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getSiteSettings } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 
-export default function Footer() {
-  const t = useTranslations("footer");
+const DEFAULT_NAME = "Hylka Apps";
+const DEFAULT_EMAIL = "hello@hylkaapps.com";
+
+export default async function Footer() {
+  const t = await getTranslations("footer");
+  const settings = await getSiteSettings();
+
+  const siteName = settings?.siteName ?? DEFAULT_NAME;
+  const email = settings?.email ?? DEFAULT_EMAIL;
+  const tagline = settings?.footerTagline ?? t("tagline");
+  const logoUrl = settings?.logo
+    ? urlFor(settings.logo).width(64).height(64).fit("max").url()
+    : null;
 
   return (
     <footer className="site-footer">
       <div className="wrap">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link className="brand" href="/" aria-label="Hylka Apps home">
-              <span className="logo-mark">H</span>
-              <span>Hylka Apps</span>
+            <Link className="brand" href="/" aria-label={`${siteName} home`}>
+              {logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img className="logo-mark" src={logoUrl} alt="" width={28} height={28} />
+              ) : (
+                <span className="logo-mark">{siteName.charAt(0)}</span>
+              )}
+              <span>{siteName}</span>
             </Link>
-            <p>{t("tagline")}</p>
+            <p>{tagline}</p>
           </div>
 
           <div className="footer-col">
@@ -50,7 +68,7 @@ export default function Footer() {
                 <Link href="/privacy">{t("links.privacy")}</Link>
               </li>
               <li>
-                <a href="mailto:hello@hylkaapps.com">hello@hylkaapps.com</a>
+                <a href={`mailto:${email}`}>{email}</a>
               </li>
             </ul>
           </div>

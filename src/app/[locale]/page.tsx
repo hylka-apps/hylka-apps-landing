@@ -1,9 +1,10 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
+import { getApp } from "@/sanity/lib/queries";
 import "./landing.css";
 
-const APP_STORE_URL = "https://apps.apple.com/app/id000000000"; // mock — replace via CMS
+const APP_STORE_URL_FALLBACK = "https://apps.apple.com/app/id000000000";
 
 export default async function LandingPage({
   params,
@@ -13,6 +14,8 @@ export default async function LandingPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
+  const cmsApp = await getApp("focusly");
+  const APP_STORE_URL = cmsApp?.appStoreUrl ?? APP_STORE_URL_FALLBACK;
 
   return (
     <div className="landing-page">

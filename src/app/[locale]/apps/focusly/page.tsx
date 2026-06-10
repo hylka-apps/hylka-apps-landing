@@ -3,9 +3,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
 import FaqAccordion from "@/components/FaqAccordion";
+import { getApp } from "@/sanity/lib/queries";
 import "./focusly.css";
 
-const APP_STORE_URL = "https://apps.apple.com/app/id000000000";
+const APP_STORE_URL_FALLBACK = "https://apps.apple.com/app/id000000000";
 
 export async function generateMetadata({
   params,
@@ -25,12 +26,25 @@ export default async function FocuslyPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("focusly");
+  const lang = locale as "en" | "uk";
+
+  const cmsApp = await getApp("focusly");
+  const APP_STORE_URL = cmsApp?.appStoreUrl ?? APP_STORE_URL_FALLBACK;
 
   const steps = t.raw("howItWorks.steps") as Array<{ label: string; title: string; desc: string }>;
-  const features = t.raw("features.items") as Array<{ icon: string; title: string; desc: string }>;
   const articles = t.raw("articles.items") as Array<{ icon: string; title: string; excerpt: string }>;
-  const faqItems = t.raw("faq.items") as Array<{ q: string; a: string }>;
-  const testimonials = t.raw("testimonials.items") as Array<{ quote: string; name: string }>;
+
+  const features = cmsApp?.features?.length
+    ? cmsApp.features.map((f) => ({ icon: f.icon, title: f.title[lang], desc: f.desc[lang] }))
+    : (t.raw("features.items") as Array<{ icon: string; title: string; desc: string }>);
+
+  const faqItems = cmsApp?.faq?.length
+    ? cmsApp.faq.map((f) => ({ q: f.q[lang], a: f.a[lang] }))
+    : (t.raw("faq.items") as Array<{ q: string; a: string }>);
+
+  const testimonials = cmsApp?.testimonials?.length
+    ? cmsApp.testimonials.map((item) => ({ quote: item.quote[lang], name: item.name }))
+    : (t.raw("testimonials.items") as Array<{ quote: string; name: string }>);
 
   const stepColors = [
     "linear-gradient(150deg,#0A84FF,#5AA9FF)",

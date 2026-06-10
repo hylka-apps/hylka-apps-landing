@@ -52,7 +52,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${display.variable} ${serif.variable}`}>
+    <html lang={locale} className={`${display.variable} ${serif.variable}`} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
           <Header />

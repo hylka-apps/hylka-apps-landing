@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { readFileSync } from "fs";
 import { join } from "path";
 import DocPage from "@/components/DocPage";
+import { getLegalDoc } from "@/sanity/lib/queries";
 
 export async function generateMetadata({
   params,
@@ -22,11 +23,13 @@ export default async function TermsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("terms");
+  const lang = locale as "en" | "uk";
 
-  const markdown = readFileSync(
-    join(process.cwd(), "src/content/terms.md"),
-    "utf-8"
-  );
+  const cmsDoc = await getLegalDoc("terms");
+  const cmsContent = lang === "uk" ? cmsDoc?.contentUk : cmsDoc?.contentEn;
+  const markdown =
+    cmsContent || readFileSync(join(process.cwd(), "src/content/terms.md"), "utf-8");
+  const updated = cmsDoc?.updatedAt ?? t("updated");
 
-  return <DocPage h1={t("h1")} updated={t("updated")} markdown={markdown} />;
+  return <DocPage h1={t("h1")} updated={updated} markdown={markdown} />;
 }
