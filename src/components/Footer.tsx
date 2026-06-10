@@ -1,21 +1,18 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getSiteSettings } from "@/sanity/lib/queries";
-import { urlFor } from "@/sanity/lib/image";
 
-const DEFAULT_NAME = "Hylka Apps";
-const DEFAULT_EMAIL = "hello@hylkaapps.com";
-
-export default async function Footer() {
+export default async function Footer({
+  siteName,
+  email,
+  tagline,
+  logoUrl,
+}: {
+  siteName: string;
+  email: string;
+  tagline: string | null;
+  logoUrl: string | null;
+}) {
   const t = await getTranslations("footer");
-  const settings = await getSiteSettings();
-
-  const siteName = settings?.siteName ?? DEFAULT_NAME;
-  const email = settings?.email ?? DEFAULT_EMAIL;
-  const tagline = settings?.footerTagline ?? t("tagline");
-  const logoUrl = settings?.logo
-    ? urlFor(settings.logo).width(64).height(64).fit("max").url()
-    : null;
 
   return (
     <footer className="site-footer">
@@ -31,7 +28,7 @@ export default async function Footer() {
               )}
               <span>{siteName}</span>
             </Link>
-            <p>{tagline}</p>
+            <p>{tagline ?? t("tagline")}</p>
           </div>
 
           <div className="footer-col">

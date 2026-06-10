@@ -1,4 +1,5 @@
 import { getSanityClient, isSanityConfigured } from "./client";
+import { urlFor } from "./image";
 
 type Localized = { en: string; uk: string };
 
@@ -56,4 +57,29 @@ export async function getSiteSettings(): Promise<SanitySiteSettings | null> {
     {},
     REVALIDATE
   );
+}
+
+// Resolved brand values with defaults — single source of truth for name/email/logo.
+export type Brand = {
+  siteName: string;
+  email: string;
+  tagline: string | null;
+  logoUrl: string | null;
+};
+
+const BRAND_DEFAULTS = {
+  siteName: "Hylka Apps",
+  email: "hello@hylkaapps.com",
+};
+
+export async function getBrand(): Promise<Brand> {
+  const s = await getSiteSettings();
+  return {
+    siteName: s?.siteName || BRAND_DEFAULTS.siteName,
+    email: s?.email || BRAND_DEFAULTS.email,
+    tagline: s?.footerTagline || null,
+    logoUrl: s?.logo
+      ? urlFor(s.logo).width(64).height(64).fit("max").url()
+      : null,
+  };
 }

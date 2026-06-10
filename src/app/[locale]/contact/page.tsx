@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import ContactForm from "@/components/ContactForm";
+import { getBrand } from "@/sanity/lib/queries";
 import "./contact.css";
 
 export async function generateMetadata({
@@ -21,6 +22,7 @@ export default async function ContactPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("contact");
+  const { email } = await getBrand();
 
   const strings = {
     tabs: {
@@ -39,7 +41,7 @@ export default async function ContactPage({
       submit: t("form.submit"),
     },
     success: t("success"),
-    error: t("error"),
+    error: t("error", { email }),
     emailLine: t("emailLine"),
   };
 
@@ -63,7 +65,7 @@ export default async function ContactPage({
       {/* ── FORM ── */}
       <section className="section surface">
         <div className="wrap">
-          <ContactForm strings={strings} />
+          <ContactForm strings={strings} email={email} />
         </div>
       </section>
     </div>

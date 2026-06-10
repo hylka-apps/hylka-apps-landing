@@ -17,16 +17,35 @@ const LANG_LABEL: Record<string, { flag: string; short: string; full: string }> 
   uk: { flag: "🇺🇦", short: "UK", full: "Українська" },
 };
 
-function Brand({ onClick }: { onClick?: () => void }) {
+function Brand({
+  siteName,
+  logoUrl,
+  onClick,
+}: {
+  siteName: string;
+  logoUrl: string | null;
+  onClick?: () => void;
+}) {
   return (
-    <Link className="brand" href="/" aria-label="Hylka Apps home" onClick={onClick}>
-      <span className="logo-mark">H</span>
-      <span>Hylka Apps</span>
+    <Link className="brand" href="/" aria-label={`${siteName} home`} onClick={onClick}>
+      {logoUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img className="logo-mark" src={logoUrl} alt="" width={28} height={28} />
+      ) : (
+        <span className="logo-mark">{siteName.charAt(0)}</span>
+      )}
+      <span>{siteName}</span>
     </Link>
   );
 }
 
-export default function Header() {
+export default function Header({
+  siteName,
+  logoUrl,
+}: {
+  siteName: string;
+  logoUrl: string | null;
+}) {
   const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
@@ -64,7 +83,7 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="wrap">
-        <Brand />
+        <Brand siteName={siteName} logoUrl={logoUrl} />
 
         <nav className="nav" aria-label="Primary">
           {NAV.map((it) => (
@@ -135,7 +154,7 @@ export default function Header() {
       />
       <aside className={`drawer${drawerOpen ? " open" : ""}`} aria-hidden={!drawerOpen}>
         <div className="drawer-top">
-          <Brand onClick={() => setDrawerOpen(false)} />
+          <Brand siteName={siteName} logoUrl={logoUrl} onClick={() => setDrawerOpen(false)} />
           <button
             type="button"
             className="drawer-close"

@@ -16,7 +16,13 @@ type Strings = {
   emailLine: string;
 };
 
-export default function ContactForm({ strings }: { strings: Strings }) {
+export default function ContactForm({
+  strings,
+  email,
+}: {
+  strings: Strings;
+  email: string;
+}) {
   const [tab, setTab] = useState<"suggestion" | "complaint">("suggestion");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [charCount, setCharCount] = useState(0);
@@ -144,8 +150,8 @@ export default function ContactForm({ strings }: { strings: Strings }) {
             </button>
             <p className="cf-email-line">
               {strings.emailLine}{" "}
-              <a href="mailto:hello@hylkaapps.com" className="textlink">
-                hello@hylkaapps.com
+              <a href={`mailto:${email}`} className="textlink">
+                {email}
               </a>
             </p>
           </div>

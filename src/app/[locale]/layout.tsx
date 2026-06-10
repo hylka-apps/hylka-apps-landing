@@ -6,6 +6,7 @@ import { Bricolage_Grotesque, Instrument_Serif } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getBrand } from "@/sanity/lib/queries";
 import "../globals.css";
 
 const display = Bricolage_Grotesque({
@@ -51,13 +52,20 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
+  const brand = await getBrand();
+
   return (
     <html lang={locale} className={`${display.variable} ${serif.variable}`} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
-          <Header />
+          <Header siteName={brand.siteName} logoUrl={brand.logoUrl} />
           <main>{children}</main>
-          <Footer />
+          <Footer
+            siteName={brand.siteName}
+            email={brand.email}
+            tagline={brand.tagline}
+            logoUrl={brand.logoUrl}
+          />
         </NextIntlClientProvider>
       </body>
     </html>
