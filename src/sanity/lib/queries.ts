@@ -51,7 +51,9 @@ export type SanitySiteSettings = {
   logo: { asset: { _ref: string } } | null;
 };
 
-const REVALIDATE = { next: { revalidate: 3600 } } as const;
+// `tags` lets the Sanity webhook purge instantly via revalidateTag("sanity");
+// `revalidate` is the hourly safety net if the webhook ever misses.
+const REVALIDATE = { next: { revalidate: 3600, tags: ["sanity"] } };
 
 const APP_FIELDS = `
   "slug": slug.current,
