@@ -1,5 +1,6 @@
 .cf-wrap {
   max-width: 580px;
+  margin-inline: auto;
 }
 
 .cf-tabs {
