@@ -80,17 +80,32 @@ export default function Header({
 
   const cur = LANG_LABEL[locale] ?? LANG_LABEL.en;
 
+  // highlight the nav item for the current page (pathname is locale-stripped)
+  const isActive = (href: string) => {
+    const base = href.split("#")[0];
+    if (base === "/") return pathname.startsWith("/apps"); // "Apps" → app pages
+    return pathname === base || pathname.startsWith(`${base}/`);
+  };
+
   return (
     <header className="site-header">
       <div className="wrap">
         <Brand siteName={siteName} logoUrl={logoUrl} />
 
         <nav className="nav" aria-label="Primary">
-          {NAV.map((it) => (
-            <Link key={it.id} href={it.href}>
-              {t(`nav.${it.key}`)}
-            </Link>
-          ))}
+          {NAV.map((it) => {
+            const active = isActive(it.href);
+            return (
+              <Link
+                key={it.id}
+                href={it.href}
+                className={active ? "active" : undefined}
+                aria-current={active ? "page" : undefined}
+              >
+                {t(`nav.${it.key}`)}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="header-right">
