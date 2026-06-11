@@ -95,7 +95,7 @@ export default function AppSections({
             return (
               <section key={s._key} className="section white">
                 <div className="wrap">
-                  <div className="section-head">
+                  <div className="section-head center">
                     <p className="eyebrow orange">{pick(s.eyebrow, lang)}</p>
                     <h2 className="h2">{pick(s.heading, lang)}</h2>
                   </div>

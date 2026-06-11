@@ -318,7 +318,8 @@ h4 {
   gap: 14px;
   align-items: center;
 }
-.center .btn-row {
+.center .btn-row,
+.btn-row.center {
   justify-content: center;
 }
 
