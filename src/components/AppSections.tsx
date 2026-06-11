@@ -44,7 +44,6 @@ export default function AppSections({
                         <div className="fp-step-num" style={{ background: STEP_COLORS[i % STEP_COLORS.length] }}>
                           {i + 1}
                         </div>
-                        <p className="fp-step-label">{pick(step.label, lang)}</p>
                         <h3 className="fp-step-title">{pick(step.title, lang)}</h3>
                         <p className="fp-step-desc">{pick(step.desc, lang)}</p>
                       </div>
