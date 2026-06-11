@@ -3,6 +3,9 @@
   padding-bottom: 0;
   border-bottom: 1px solid var(--hairline);
 }
+.doc-layout > section:not(.doc-header) {
+  padding-top: 56px;
+}
 .doc-wrap {
   max-width: var(--maxw-doc);
 }
