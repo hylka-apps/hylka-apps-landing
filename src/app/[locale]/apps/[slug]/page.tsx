@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import AppStoreBadge from "@/components/AppStoreBadge";
 import AppSections from "@/components/AppSections";
 import { getApp, getAllApps, getBrand, type Loc } from "@/sanity/lib/queries";
+import { preserveCase } from "@/lib/text";
 import "./app.css";
 
 const APP_STORE_URL_FALLBACK = "https://apps.apple.com/app/id000000000";
@@ -60,7 +61,7 @@ export default async function AppPage({
           <div className="fp-copy">
             <span className="fp-eyebrow">
               <span className="fp-dot" />
-              {pick(app.kicker, lang)}
+              {preserveCase(pick(app.kicker, lang))}
             </span>
             <h1 className="fp-h1">
               {heroH1}

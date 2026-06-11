@@ -202,6 +202,11 @@ h4 {
 .center {
   text-align: center;
 }
+
+/* opt a token out of an ancestor's text-transform (e.g. "iOS" in a label) */
+.keep-case {
+  text-transform: none;
+}
 .section-head {
   max-width: 780px;
 }

@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
 import { getAllApps, type Loc } from "@/sanity/lib/queries";
+import { preserveCase } from "@/lib/text";
 import "./landing.css";
 
 const APP_STORE_URL_FALLBACK = "https://apps.apple.com/app/id000000000";
@@ -82,7 +83,7 @@ export default async function LandingPage({
         <div className="showcase-inner">
           <span className="lp-eyebrow">
             <span className="dot" />
-            <span>{t("eyebrow")}</span>
+            <span>{preserveCase(t("eyebrow"))}</span>
           </span>
           <h1 className="lp-h1">
             {t.rich("h1", {
@@ -151,7 +152,7 @@ export default async function LandingPage({
                 ) : null}
               </div>
               <div className="ac-body">
-                <span className="ac-kicker">{pick(app.kicker)}</span>
+                <span className="ac-kicker">{preserveCase(pick(app.kicker))}</span>
                 <h3 className="ac-name">{pick(app.name)}</h3>
                 <p className="ac-desc">{pick(app.cardDescription)}</p>
                 <div className="ac-chips">
