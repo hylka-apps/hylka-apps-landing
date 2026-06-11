@@ -205,7 +205,7 @@ h4 {
 .section-head {
   max-width: 780px;
 }
-.center .section-head {
+.section-head.center {
   margin: 0 auto;
 }
 

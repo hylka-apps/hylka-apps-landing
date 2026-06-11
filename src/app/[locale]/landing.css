@@ -96,6 +96,8 @@
   line-height: 1.5;
   color: #55555c;
   font-weight: 400;
+  /* soft white halo — invisible on light bg, restores contrast over any plate */
+  text-shadow: 0 0 28px rgb(251, 251, 253), 0 0 56px rgba(251, 251, 253, 0.9);
 }
 
 .lp-cta-row {
@@ -208,8 +210,10 @@
   animation-delay: 0.05s;
 }
 .plate.p-stats {
-  top: 30%;
-  left: -58px;
+  top: 22%;
+  /* on wide screens the whole plate (incl. its labels) is visible; it tucks
+     left as the viewport narrows so it never reaches the centered hero text */
+  left: clamp(-70px, calc(17vw - 200px), 16px);
   width: 200px;
   height: 184px;
   --rot: -8deg;
@@ -348,12 +352,17 @@
    ==================================================== */
 .apps-sec {
   background: var(--surface);
-  padding: clamp(64px, 9vh, 110px) 0;
+  padding: 56px 0;
+}
+@media (min-width: 768px) {
+  .apps-sec {
+    padding: 96px 0;
+  }
 }
 .apps-head {
   max-width: 900px;
   margin: 0 auto clamp(40px, 6vh, 64px);
-  padding: 0 24px;
+  padding: 0 var(--pad-x);
 }
 .apps-head .lp-eyebrow {
   background: rgba(255, 255, 255, 0.85);
@@ -369,12 +378,17 @@
 }
 
 .apps-col {
-  max-width: 1120px;
+  max-width: var(--maxw);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--pad-x);
   display: flex;
   flex-direction: column;
   gap: clamp(26px, 4vh, 44px);
+}
+@media (min-width: 768px) {
+  .apps-col {
+    padding: 0 var(--pad-x-d);
+  }
 }
 
 .appcard {
