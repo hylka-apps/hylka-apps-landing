@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -53,6 +53,7 @@ export default function Header({
 
   const [langOpen, setLangOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLElement>(null);
 
   // close the language menu on any outside click
   useEffect(() => {
@@ -68,6 +69,44 @@ export default function Header({
     return () => {
       document.body.style.overflow = "";
     };
+  }, [drawerOpen]);
+
+  // while the drawer is open: Esc closes it, and Tab is trapped inside it
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const drawer = drawerRef.current;
+    if (!drawer) return;
+
+    const focusables = () =>
+      Array.from(
+        drawer.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+
+    focusables()[0]?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setDrawerOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [drawerOpen]);
 
   const switchLocale = (next: string) => {
@@ -167,7 +206,14 @@ export default function Header({
         className={`drawer-overlay${drawerOpen ? " open" : ""}`}
         onClick={() => setDrawerOpen(false)}
       />
-      <aside className={`drawer${drawerOpen ? " open" : ""}`} aria-hidden={!drawerOpen}>
+      <aside
+        ref={drawerRef}
+        className={`drawer${drawerOpen ? " open" : ""}`}
+        aria-hidden={!drawerOpen}
+        role="dialog"
+        aria-modal="true"
+        aria-label={t("header.openMenu")}
+      >
         <div className="drawer-top">
           <Brand siteName={siteName} logoUrl={logoUrl} onClick={() => setDrawerOpen(false)} />
           <button

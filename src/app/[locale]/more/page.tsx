@@ -50,14 +50,29 @@ export default async function MorePage({
               <div key={i} className="more-block">
                 <h2 className="more-block-title">{sec.title}</h2>
                 <ul className="more-block-links">
-                  {sec.links.map((link, j) => (
-                    <li key={j}>
-                      <Link href={link.href} className="more-link">
-                        {link.label}
-                        <span className="arr">→</span>
-                      </Link>
-                    </li>
-                  ))}
+                  {sec.links.map((link, j) => {
+                    const external = /^https?:\/\//.test(link.href);
+                    return (
+                      <li key={j}>
+                        {external ? (
+                          <a
+                            href={link.href}
+                            className="more-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {link.label}
+                            <span className="arr">→</span>
+                          </a>
+                        ) : (
+                          <Link href={link.href} className="more-link">
+                            {link.label}
+                            <span className="arr">→</span>
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}

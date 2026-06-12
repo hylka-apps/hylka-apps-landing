@@ -22,7 +22,7 @@ export default function AppSections({
 }: {
   sections: AppSection[];
   lang: "en" | "uk";
-  appStoreUrl: string;
+  appStoreUrl?: string;
   downloadLabel: string;
   contactLabel: string;
 }) {

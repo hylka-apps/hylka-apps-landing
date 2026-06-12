@@ -3,9 +3,8 @@ import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
 import { getAllApps, type Loc } from "@/sanity/lib/queries";
 import { preserveCase } from "@/lib/text";
+import { resolveStoreUrl } from "@/config/site";
 import "./landing.css";
-
-const APP_STORE_URL_FALLBACK = "https://apps.apple.com/app/id000000000";
 
 const CARD_GRADIENTS = [
   "linear-gradient(150deg,#0A84FF 0%,#5AA9FF 55%,#8EC5FF 100%)",
@@ -25,7 +24,8 @@ export default async function LandingPage({
   const pick = (loc?: Loc) => (loc?.[lang] ?? loc?.en ?? "").toString();
 
   const apps = await getAllApps();
-  const APP_STORE_URL = apps[0]?.appStoreUrl ?? APP_STORE_URL_FALLBACK;
+  // No real URL → undefined → the badge renders inert instead of a dead link.
+  const APP_STORE_URL = resolveStoreUrl(apps[0]?.appStoreUrl);
 
   return (
     <div className="landing-page">

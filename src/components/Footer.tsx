@@ -1,5 +1,6 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getAllApps, type Loc } from "@/sanity/lib/queries";
 
 export default async function Footer({
   siteName,
@@ -13,6 +14,9 @@ export default async function Footer({
   logoUrl: string | null;
 }) {
   const t = await getTranslations("footer");
+  const locale = (await getLocale()) as "en" | "uk";
+  const pick = (loc?: Loc) => (loc?.[locale] ?? loc?.en ?? "").toString();
+  const apps = await getAllApps();
 
   return (
     <footer className="site-footer">
@@ -34,9 +38,11 @@ export default async function Footer({
           <div className="footer-col">
             <h4>{t("cols.apps")}</h4>
             <ul>
-              <li>
-                <Link href="/apps/focusly">Focusly</Link>
-              </li>
+              {apps.map((app) => (
+                <li key={app.slug}>
+                  <Link href={`/apps/${app.slug}`}>{pick(app.name)}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 

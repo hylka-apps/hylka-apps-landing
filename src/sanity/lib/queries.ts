@@ -1,5 +1,6 @@
 import { getSanityClient, isSanityConfigured } from "./client";
 import { urlFor } from "./image";
+import { siteConfig } from "@/config/site";
 
 export type Loc = { en?: string; uk?: string };
 
@@ -115,16 +116,11 @@ export type Brand = {
   logoUrl: string | null;
 };
 
-const BRAND_DEFAULTS = {
-  siteName: "Hylka Apps",
-  email: "hello@hylkaapps.com",
-};
-
 export async function getBrand(): Promise<Brand> {
   const s = await getSiteSettings();
   return {
-    siteName: s?.siteName || BRAND_DEFAULTS.siteName,
-    email: s?.email || BRAND_DEFAULTS.email,
+    siteName: s?.siteName || siteConfig.brand.name,
+    email: s?.email || siteConfig.brand.email,
     tagline: s?.footerTagline || null,
     logoUrl: s?.logo
       ? urlFor(s.logo).width(64).height(64).fit("max").url()

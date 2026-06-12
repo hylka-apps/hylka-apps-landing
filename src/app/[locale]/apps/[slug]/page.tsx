@@ -5,9 +5,8 @@ import AppStoreBadge from "@/components/AppStoreBadge";
 import AppSections from "@/components/AppSections";
 import { getApp, getAllApps, getBrand, type Loc } from "@/sanity/lib/queries";
 import { preserveCase } from "@/lib/text";
+import { resolveStoreUrl } from "@/config/site";
 import "./app.css";
-
-const APP_STORE_URL_FALLBACK = "https://apps.apple.com/app/id000000000";
 
 function pick(loc: Loc | undefined, lang: "en" | "uk"): string {
   return (loc?.[lang] ?? loc?.en ?? "").toString();
@@ -49,7 +48,8 @@ export default async function AppPage({
   const t = await getTranslations("appPage");
   const tHeader = await getTranslations("header");
 
-  const appStoreUrl = app.appStoreUrl ?? APP_STORE_URL_FALLBACK;
+  // No real URL → undefined → the badge renders inert instead of a dead link.
+  const appStoreUrl = resolveStoreUrl(app.appStoreUrl);
   const heroH1 = pick(app.heroH1, lang);
   const heroAccent = pick(app.heroH1Accent, lang);
 

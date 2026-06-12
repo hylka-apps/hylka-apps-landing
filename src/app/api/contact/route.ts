@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import * as Sentry from "@sentry/nextjs";
+import { siteConfig } from "@/config/site";
 
 type ContactPayload = {
   name: string;
@@ -9,15 +11,18 @@ type ContactPayload = {
   type: "suggestion" | "complaint";
 };
 
-// TODO: change FROM to noreply@hylkaapps.com after domain is verified in Resend
-const TO = "milagalko1@gmail.com";
-const FROM = "Hylka Apps <onboarding@resend.dev>";
+// Pragmatic email shape check — not RFC-perfect, just enough to reject typos.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
   const body = (await request.json()) as ContactPayload;
 
   if (!body.name || !body.email || !body.message) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+  }
+
+  if (!EMAIL_RE.test(body.email)) {
+    return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
   }
 
   if (!process.env.RESEND_API_KEY) {
@@ -32,8 +37,8 @@ export async function POST(request: Request) {
     : `[${label}] from ${body.name}`;
 
   const { error } = await resend.emails.send({
-    from: FROM,
-    to: TO,
+    from: siteConfig.emailFrom,
+    to: siteConfig.notifyEmails,
     replyTo: body.email,
     subject,
     text: `From: ${body.name} <${body.email}>\nType: ${label}\n\n${body.message}`,
@@ -41,6 +46,7 @@ export async function POST(request: Request) {
 
   if (error) {
     console.error("Resend error:", error);
+    Sentry.captureException(error, { tags: { route: "contact" } });
     return NextResponse.json({ error: "Failed to send" }, { status: 500 });
   }
 
