@@ -51,7 +51,7 @@ export default async function ContactPage({
       <section className="section white contact-hero">
         <div className="wrap">
           <p className="eyebrow green">{t("eyebrow")}</p>
-          <h1 className="h1 contact-h1">
+          <h1 className="h1 page-h1 contact-h1">
             {t.rich("h1", {
               serif: (chunks) => <span className="contact-serif">{chunks}</span>,
             })}

@@ -35,7 +35,7 @@ export default async function MorePage({
       <section className="section white more-hero">
         <div className="wrap">
           <p className="eyebrow blue">{t("eyebrow")}</p>
-          <h1 className="h1">{t("h1")}</h1>
+          <h1 className="h1 page-h1">{t("h1")}</h1>
           <p className="lead" style={{ marginTop: 18, maxWidth: "48ch" }}>
             {t("intro")}
           </p>

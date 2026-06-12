@@ -53,7 +53,23 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--white);
+}
+
+/* Asymmetric overscroll: white at the top (matches header / first section),
+   footer-dark at the bottom. A single html background can only colour one;
+   this fixed strip is pinned to the viewport bottom and only shows in the
+   bottom overscroll gap — opaque sections + footer cover it during scroll. */
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50vh;
   background: var(--footer-bg);
+  z-index: -1;
+  pointer-events: none;
 }
 
 body {
@@ -98,6 +114,17 @@ a {
   background: rgba(0, 136, 255, 0.18);
 }
 
+/* keyboard focus — visible ring on every interactive element
+   (only .appcard and form fields had focus styling before) */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+.cf-field input:focus-visible,
+.cf-field textarea:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
 /* ============================================================
    Typography
    ============================================================ */
@@ -107,24 +134,32 @@ h3,
 h4 {
   margin: 0;
   font-weight: 700;
-  letter-spacing: 0.4px;
+  letter-spacing: -0.2px;
   text-wrap: balance;
 }
 
 .h1 {
   font-size: clamp(40px, 6vw, 60px);
   line-height: 1.03;
-  letter-spacing: 0.6px;
+  letter-spacing: -1px;
 }
 .h2 {
   font-size: clamp(34px, 5vw, 54px);
   line-height: 1.04;
-  letter-spacing: 0.6px;
+  letter-spacing: -0.5px;
 }
 .h3 {
   font-size: clamp(26px, 3vw, 40px);
   line-height: 1.06;
-  letter-spacing: 0.4px;
+  letter-spacing: -0.2px;
+}
+
+/* display treatment for page-title h1s (about/contact/more/legal) —
+   matches the hero type voice instead of the looser default .h1 */
+.page-h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -1.5px;
 }
 
 .lead {
@@ -778,7 +813,7 @@ h4 {
 .cta-band {
   text-align: center;
   border-radius: 28px;
-  padding: 64px 32px;
+  padding: 56px 32px;
 }
 .cta-band.accent {
   background: linear-gradient(135deg, #0088ff, #4da9ff);

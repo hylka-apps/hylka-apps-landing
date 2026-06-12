@@ -4,7 +4,7 @@
   border-bottom: 1px solid var(--hairline);
 }
 .doc-layout > section:not(.doc-header) {
-  padding-top: 56px;
+  padding-top: 28px;
 }
 .doc-wrap {
   max-width: var(--maxw-doc);
@@ -12,7 +12,7 @@
 .doc-updated {
   font-size: 14px;
   color: var(--muted);
-  margin: 8px 0 40px;
+  margin: 8px 0 24px;
 }
 .doc-intro {
   color: var(--muted);

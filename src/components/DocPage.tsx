@@ -48,7 +48,7 @@ export default function DocPage({
     <div className="doc-layout">
       <header className="doc-header section white">
         <div className="wrap doc-wrap">
-          <h1 className="h1">{h1}</h1>
+          <h1 className="h1 page-h1">{h1}</h1>
           <p className="doc-updated">{updated}</p>
         </div>
       </header>
