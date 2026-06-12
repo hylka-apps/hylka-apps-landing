@@ -10,7 +10,6 @@ Marketing website for **Hylka Apps**, an indie iOS studio.
 
 ```
 docs/          — design specifications
-prototype/     — HTML/CSS prototype (design reference)
 src/           — app source
 public/        — static assets
 ```
@@ -20,7 +19,6 @@ public/        — static assets
 - **[docs/STRUCTURE.md](docs/STRUCTURE.md)** — page-by-page structure for every page.
 - **[docs/CONTENT.md](docs/CONTENT.md)** — example copy (mock product "Focusly", to be replaced via CMS).
 - **[docs/HANDOFF-PROMPT.md](docs/HANDOFF-PROMPT.md)** — brief for the design/prototyping phase.
-- **[prototype/HANDOFF.md](prototype/HANDOFF.md)** — component breakdown and implementation notes from the prototype.
 
 ## Key decisions
 
@@ -31,4 +29,4 @@ public/        — static assets
 
 ## Status
 
-Implementation — Next.js project initialised. Spec docs reviewed; prototype in `prototype/`.
+Implementation — live on Vercel. Content editable via Sanity Studio at `/studio`.
