@@ -1,8 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
-import { getAllApps, type Loc } from "@/sanity/lib/queries";
+import { getAllApps } from "@/sanity/lib/queries";
 import { preserveCase } from "@/lib/text";
+import { pick } from "@/lib/i18n";
 import { resolveStoreUrl } from "@/config/site";
 import "./landing.css";
 
@@ -21,7 +22,6 @@ export default async function LandingPage({
   setRequestLocale(locale);
   const t = await getTranslations("home");
   const lang = locale as "en" | "uk";
-  const pick = (loc?: Loc) => (loc?.[lang] ?? loc?.en ?? "").toString();
 
   const apps = await getAllApps();
   // No real URL → undefined → the badge renders inert instead of a dead link.
@@ -130,7 +130,7 @@ export default async function LandingPage({
               key={app.slug}
               className="appcard"
               href={`/apps/${app.slug}`}
-              aria-label={`${pick(app.name)} — ${t("apps.learnMore")}`}
+              aria-label={`${pick(app.name, lang)} — ${t("apps.learnMore")}`}
             >
               <div className="ac-media">
                 <div
@@ -152,14 +152,14 @@ export default async function LandingPage({
                 ) : null}
               </div>
               <div className="ac-body">
-                <span className="ac-kicker">{preserveCase(pick(app.kicker))}</span>
-                <h3 className="ac-name">{pick(app.name)}</h3>
-                <p className="ac-desc">{pick(app.cardDescription)}</p>
+                <span className="ac-kicker">{preserveCase(pick(app.kicker, lang))}</span>
+                <h3 className="ac-name">{pick(app.name, lang)}</h3>
+                <p className="ac-desc">{pick(app.cardDescription, lang)}</p>
                 {(app.cardChips ?? []).length > 0 && (
                   <div className="ac-chips">
                     {(app.cardChips ?? []).map((c, j) => (
                       <span key={j} className="ac-chip">
-                        {pick(c)}
+                        {pick(c, lang)}
                       </span>
                     ))}
                   </div>

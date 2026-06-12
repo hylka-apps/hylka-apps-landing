@@ -55,10 +55,10 @@ export default async function AboutPage({
   return (
     <div>
       {/* ── HERO ── */}
-      <section className="section white about-hero">
+      <section className="section white page-hero about-hero">
         <div className="wrap">
           <p className="eyebrow coral">{t("eyebrow")}</p>
-          <h1 className="h1 about-h1">
+          <h1 className="h1 page-h1 about-h1">
             {t.rich("h1", {
               serif: (chunks) => <span className="about-serif">{chunks}</span>,
             })}

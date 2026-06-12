@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getAllApps, type Loc } from "@/sanity/lib/queries";
+import { getAllApps } from "@/sanity/lib/queries";
+import { pick } from "@/lib/i18n";
 
 export default async function Footer({
   siteName,
@@ -15,7 +16,6 @@ export default async function Footer({
 }) {
   const t = await getTranslations("footer");
   const locale = (await getLocale()) as "en" | "uk";
-  const pick = (loc?: Loc) => (loc?.[locale] ?? loc?.en ?? "").toString();
   const apps = await getAllApps();
 
   return (
@@ -40,7 +40,7 @@ export default async function Footer({
             <ul>
               {apps.map((app) => (
                 <li key={app.slug}>
-                  <Link href={`/apps/${app.slug}`}>{pick(app.name)}</Link>
+                  <Link href={`/apps/${app.slug}`}>{pick(app.name, locale)}</Link>
                 </li>
               ))}
             </ul>

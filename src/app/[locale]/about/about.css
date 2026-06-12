@@ -1,12 +1,4 @@
-.about-hero {
-  padding-top: clamp(72px, 10vh, 120px);
-  padding-bottom: clamp(56px, 8vh, 96px);
-}
 .about-h1 {
-  font-family: var(--display);
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  margin-top: 12px;
   max-width: 16ch;
 }
 .about-serif {
@@ -16,7 +8,6 @@
   color: var(--acc-coral);
 }
 .about-lead {
-  margin-top: 22px;
   max-width: 52ch;
 }
 
@@ -37,7 +28,6 @@
   opacity: 0.85;
 }
 .about-story-sec {
-  padding-top: 72px;
   padding-bottom: 72px;
 }
 .about-story-text {

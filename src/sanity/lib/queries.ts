@@ -99,7 +99,7 @@ export async function getLegalDoc(
   );
 }
 
-export async function getSiteSettings(): Promise<SanitySiteSettings | null> {
+async function getSiteSettings(): Promise<SanitySiteSettings | null> {
   if (!isSanityConfigured()) return null;
   return getSanityClient().fetch(
     `*[_type == "siteSettings"][0]{siteName, email, footerTagline, logo}`,

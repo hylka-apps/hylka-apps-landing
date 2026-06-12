@@ -8,7 +8,6 @@
   --blue: #0088ff;
   --blue-press: #006fd6;
   --text: #101010;
-  --black: #000000;
   --surface: #f5f5f7;
   --white: #ffffff;
   --footer-bg: #0d0d0d;
@@ -32,7 +31,6 @@
   /* ---- Shadows ---- */
   --shadow-card: 0 1px 2px rgba(16, 16, 16, 0.04), 0 8px 24px rgba(16, 16, 16, 0.06);
   --shadow-card-hover: 0 2px 6px rgba(16, 16, 16, 0.06), 0 18px 48px rgba(16, 16, 16, 0.12);
-  --shadow-header: 0 1px 0 var(--hairline);
 
   /* ---- Layout ---- */
   --maxw: 1200px;
@@ -53,6 +51,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* keep in-page anchor targets clear of the fixed 66px header */
+  scroll-padding-top: 90px;
   background: var(--white);
 }
 
@@ -160,6 +160,8 @@ h4 {
   font-family: var(--display);
   font-weight: 800;
   letter-spacing: -1.5px;
+  /* single source for the eyebrow→h1 gap and h1→lead gap */
+  margin: 12px 0 20px;
 }
 
 .lead {
@@ -243,6 +245,43 @@ h4 {
 }
 .section.white {
   background: var(--white);
+}
+
+/* Shared hero band for about / more / contact. Top padding clears the fixed
+   66px header and adds a tighter, consistent gap than the old per-page values. */
+.page-hero {
+  padding-top: clamp(84px, 6vh, 100px);
+  padding-bottom: clamp(40px, 5vh, 64px);
+}
+/* consistent gap from the hero into the first content block below it
+   (more grid / about story / contact form) across all three pages */
+.page-hero + .section {
+  padding-top: 56px;
+}
+
+/* attention pulse when a section is reached via an in-page anchor ("How it
+   works ↓"): an inset blue ring + tint that pulses twice, then fades. Inset
+   shadows layer over the background without replacing it. */
+@keyframes section-target-pulse {
+  0% {
+    box-shadow: inset 0 0 0 9999px rgba(0, 136, 255, 0);
+  }
+  18% {
+    box-shadow: inset 0 0 0 9999px rgba(0, 136, 255, 0.06);
+  }
+  100% {
+    box-shadow: inset 0 0 0 9999px rgba(0, 136, 255, 0);
+  }
+}
+.section:target,
+.section.is-flash {
+  animation: section-target-pulse 1.8s ease-in-out 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section:target,
+  .section.is-flash {
+    animation: none;
+  }
 }
 
 .center {

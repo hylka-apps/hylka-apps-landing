@@ -165,14 +165,19 @@
       "emailPlaceholder": "ви@приклад.com",
       "subject": "Тема",
       "subjectPlaceholder": "Коротко про суть (необов'язково)",
+      "app": "Застосунок",
+      "appPlaceholder": "Загальне — не про застосунок",
       "message": "Повідомлення",
       "messagePlaceholder": "Розкажіть докладніше…",
       "submit": "Надіслати",
-      "charCount": "{count}/500"
+      "charCount": "{count}/500",
+      "required": "Обов’язкове поле",
+      "invalidEmail": "Введіть коректний email"
     },
     "success": "Дякуємо! Ваше повідомлення вже летить до нас.",
     "error": "Щось пішло не так — спробуйте ще раз або напишіть на {email}.",
-    "emailLine": "Вважаєте за краще email? Пишіть на"
+    "emailLine": "Вважаєте за краще email? Пишіть на",
+    "sendAnother": "Надіслати ще"
   },
   "terms": {
     "meta": {

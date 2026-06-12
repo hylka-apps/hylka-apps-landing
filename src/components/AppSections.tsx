@@ -1,17 +1,14 @@
 import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
 import FaqAccordion from "@/components/FaqAccordion";
-import type { AppSection, Loc } from "@/sanity/lib/queries";
+import type { AppSection } from "@/sanity/lib/queries";
+import { pick } from "@/lib/i18n";
 
 const STEP_COLORS = [
   "linear-gradient(150deg,#0A84FF,#5AA9FF)",
   "linear-gradient(150deg,#9B4DEB,#C77DFF)",
   "linear-gradient(150deg,#19B559,#5FE08A)",
 ];
-
-function pick(loc: Loc | undefined, lang: "en" | "uk"): string {
-  return (loc?.[lang] ?? loc?.en ?? "").toString();
-}
 
 export default function AppSections({
   sections,

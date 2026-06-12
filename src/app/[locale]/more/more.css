@@ -1,12 +1,6 @@
-.more-hero {
-  padding-top: clamp(72px, 10vh, 120px);
-  padding-bottom: clamp(56px, 8vh, 96px);
+.more-intro {
+  max-width: 48ch;
 }
-
-.more-hero + .section {
-  padding-top: 56px;
-}
-
 .more-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

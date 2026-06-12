@@ -165,14 +165,19 @@
       "emailPlaceholder": "you@example.com",
       "subject": "Subject",
       "subjectPlaceholder": "Short summary (optional)",
+      "app": "App",
+      "appPlaceholder": "General — not app-specific",
       "message": "Message",
       "messagePlaceholder": "Tell us more…",
       "submit": "Send message",
-      "charCount": "{count}/500"
+      "charCount": "{count}/500",
+      "required": "Required",
+      "invalidEmail": "Enter a valid email address"
     },
     "success": "Thanks! Your message is on its way to us.",
     "error": "Something went wrong — please try again or email {email}.",
-    "emailLine": "Prefer email? Reach us at"
+    "emailLine": "Prefer email? Reach us at",
+    "sendAnother": "Send another"
   },
   "terms": {
     "meta": {

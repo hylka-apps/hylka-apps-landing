@@ -7,6 +7,7 @@ type ContactPayload = {
   name: string;
   email: string;
   subject?: string;
+  app?: string;
   message: string;
   type: "suggestion" | "complaint";
 };
@@ -32,16 +33,21 @@ export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   const label = body.type === "complaint" ? "Complaint" : "Suggestion";
+  const appTag = body.app ? ` · ${body.app}` : "";
   const subject = body.subject
-    ? `[${label}] ${body.subject}`
-    : `[${label}] from ${body.name}`;
+    ? `[${label}${appTag}] ${body.subject}`
+    : `[${label}${appTag}] from ${body.name}`;
 
   const { error } = await resend.emails.send({
     from: siteConfig.emailFrom,
     to: siteConfig.notifyEmails,
     replyTo: body.email,
     subject,
-    text: `From: ${body.name} <${body.email}>\nType: ${label}\n\n${body.message}`,
+    text:
+      `From: ${body.name} <${body.email}>\n` +
+      `Type: ${label}\n` +
+      `App: ${body.app || "General"}\n\n` +
+      body.message,
   });
 
   if (error) {

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getAllApps } from "@/sanity/lib/queries";
+import { pick, type Lang } from "@/lib/i18n";
 import "./more.css";
 
 export async function generateMetadata({
@@ -29,14 +31,27 @@ export default async function MorePage({
 
   const sections = t.raw("sections") as Record<string, SectionData>;
 
+  // The apps list is the single source of truth in Sanity — keep the section
+  // title from translations but build its links from the live app list.
+  const apps = await getAllApps();
+  if (sections.apps) {
+    sections.apps = {
+      ...sections.apps,
+      links: apps.map((app) => ({
+        label: pick(app.name, locale as Lang),
+        href: `/apps/${app.slug}`,
+      })),
+    };
+  }
+
   return (
     <div>
       {/* ── HEADER ── */}
-      <section className="section white more-hero">
+      <section className="section white page-hero more-hero">
         <div className="wrap">
           <p className="eyebrow blue">{t("eyebrow")}</p>
           <h1 className="h1 page-h1">{t("h1")}</h1>
-          <p className="lead" style={{ marginTop: 18, maxWidth: "48ch" }}>
+          <p className="lead more-intro">
             {t("intro")}
           </p>
         </div>

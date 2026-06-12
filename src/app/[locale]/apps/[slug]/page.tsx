@@ -3,14 +3,12 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import AppStoreBadge from "@/components/AppStoreBadge";
 import AppSections from "@/components/AppSections";
-import { getApp, getAllApps, getBrand, type Loc } from "@/sanity/lib/queries";
+import AnchorLink from "@/components/AnchorLink";
+import { getApp, getAllApps, getBrand } from "@/sanity/lib/queries";
 import { preserveCase } from "@/lib/text";
+import { pick } from "@/lib/i18n";
 import { resolveStoreUrl } from "@/config/site";
 import "./app.css";
-
-function pick(loc: Loc | undefined, lang: "en" | "uk"): string {
-  return (loc?.[lang] ?? loc?.en ?? "").toString();
-}
 
 export async function generateStaticParams() {
   const apps = await getAllApps();
@@ -70,9 +68,9 @@ export default async function AppPage({
             <p className="fp-sub">{pick(app.heroSubtitle, lang)}</p>
             <div className="fp-cta-row">
               <AppStoreBadge href={appStoreUrl} />
-              <a className="btn btn-secondary" href="#how-it-works">
+              <AnchorLink className="btn btn-secondary" href="#how-it-works">
                 {t("howItWorks")} ↓
-              </a>
+              </AnchorLink>
             </div>
           </div>
 
