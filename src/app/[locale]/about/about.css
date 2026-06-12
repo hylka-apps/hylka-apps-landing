@@ -3,6 +3,9 @@
   padding-bottom: clamp(56px, 8vh, 96px);
 }
 .about-h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -1.5px;
   margin-top: 12px;
   max-width: 16ch;
 }
@@ -33,10 +36,14 @@
   background: var(--acc-coral);
   opacity: 0.85;
 }
+.about-story-sec {
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
 .about-story-text {
   font-size: clamp(17px, 1.5vw, 21px);
   line-height: 1.65;
-  color: var(--text);
+  color: var(--muted);
   margin: 0;
   font-style: italic;
 }

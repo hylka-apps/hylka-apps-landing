@@ -53,6 +53,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--footer-bg);
 }
 
 body {
@@ -64,12 +65,22 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  min-height: 100%;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
 body > main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+body > main > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+body > main > div > *:last-child {
   flex: 1;
 }
 

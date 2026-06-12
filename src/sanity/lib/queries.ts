@@ -23,7 +23,7 @@ export type SanityApp = {
   appStoreUrl?: string | null;
   iconUrl?: string | null;
   cardDescription?: Loc;
-  cardChips?: { label?: Loc }[];
+  cardChips?: Loc[];
   sections?: AppSection[];
 };
 
@@ -33,7 +33,7 @@ export type SanityAppCard = {
   name?: Loc;
   kicker?: Loc;
   cardDescription?: Loc;
-  cardChips?: { label?: Loc }[];
+  cardChips?: Loc[];
   appStoreUrl?: string | null;
   iconUrl?: string | null;
 };

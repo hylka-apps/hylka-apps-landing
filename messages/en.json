@@ -91,11 +91,13 @@
           "title": "Made with care",
           "desc": "Every detail sweated until it feels effortless."
         }
-      ]
+      ],
+      "eyebrow": "Our values"
     },
     "cta": {
       "h2": "See what we've built.",
-      "cta": "Explore Focusly"
+      "cta": "Explore Focusly",
+      "sub": "One focused app, already live. More on the way."
     }
   },
   "more": {

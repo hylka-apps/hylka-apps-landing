@@ -155,13 +155,15 @@ export default async function LandingPage({
                 <span className="ac-kicker">{preserveCase(pick(app.kicker))}</span>
                 <h3 className="ac-name">{pick(app.name)}</h3>
                 <p className="ac-desc">{pick(app.cardDescription)}</p>
-                <div className="ac-chips">
-                  {(app.cardChips ?? []).map((c, j) => (
-                    <span key={j} className="ac-chip">
-                      {pick(c.label)}
-                    </span>
-                  ))}
-                </div>
+                {(app.cardChips ?? []).length > 0 && (
+                  <div className="ac-chips">
+                    {(app.cardChips ?? []).map((c, j) => (
+                      <span key={j} className="ac-chip">
+                        {pick(c)}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <div className="ac-foot">
                   <AppStoreBadge />
                   <span className="ac-more">
