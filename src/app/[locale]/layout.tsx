@@ -35,9 +35,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "home.meta" });
+  const { faviconUrl } = await getBrand();
   return {
     title: t("title"),
     description: t("description"),
+    // CMS-controlled tab icon (Brand → Favicon, falls back to logo). When unset,
+    // the static src/app/favicon.ico is used.
+    ...(faviconUrl ? { icons: { icon: faviconUrl } } : {}),
   };
 }
 

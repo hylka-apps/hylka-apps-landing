@@ -84,6 +84,7 @@ export type SanitySiteSettings = {
   email: string | null;
   footerTagline: string | null;
   logo: { asset: { _ref: string } } | null;
+  favicon: { asset: { _ref: string } } | null;
 };
 
 // In dev, fetch fresh every time so Studio edits show on localhost immediately
@@ -167,7 +168,7 @@ export async function getAllLegalDocs(): Promise<SanityLegalLink[]> {
 async function getSiteSettings(): Promise<SanitySiteSettings | null> {
   if (!isSanityConfigured()) return null;
   return getSanityClient().fetch(
-    `*[_type == "siteSettings"][0]{siteName, email, footerTagline, logo}`,
+    `*[_type == "siteSettings"][0]{siteName, email, footerTagline, logo, favicon}`,
     {},
     REVALIDATE
   );
@@ -270,16 +271,22 @@ export type Brand = {
   email: string;
   tagline: string | null;
   logoUrl: string | null;
+  faviconUrl: string | null;
 };
 
 export async function getBrand(): Promise<Brand> {
   const s = await getSiteSettings();
+  // The browser-tab icon: a dedicated favicon if set, otherwise the logo.
+  const faviconSource = s?.favicon ?? s?.logo;
   return {
     siteName: s?.siteName || siteConfig.brand.name,
     email: s?.email || siteConfig.brand.email,
     tagline: s?.footerTagline || null,
     logoUrl: s?.logo
       ? urlFor(s.logo).width(64).height(64).fit("max").url()
+      : null,
+    faviconUrl: faviconSource
+      ? urlFor(faviconSource).width(512).height(512).fit("max").url()
       : null,
   };
 }

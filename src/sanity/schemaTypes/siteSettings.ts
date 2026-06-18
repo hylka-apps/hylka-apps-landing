@@ -18,6 +18,14 @@ export const siteSettings = defineType({
       type: "image",
       options: { hotspot: true },
     },
+    {
+      name: "favicon",
+      title: "Favicon (browser tab icon)",
+      description:
+        "Square icon shown on the browser tab. Falls back to the logo if empty. PNG/SVG, ideally 512×512.",
+      type: "image",
+      options: { accept: "image/*" },
+    },
   ],
   preview: {
     select: { title: "siteName" },

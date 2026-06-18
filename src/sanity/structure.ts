@@ -37,8 +37,8 @@ export const structure: StructureResolver = (S, context) => {
             .title("Site content")
             .items([
               page("homeContent", "Home page", HomeIcon),
-              page("aboutPage", "About page", UsersIcon),
               page("morePage", "More page", EllipsisHorizontalIcon),
+              page("aboutPage", "About page", UsersIcon),
               page("contactPage", "Contact page", EnvelopeIcon),
               S.documentTypeListItem("legalDoc").title("Legal documents"),
             ])
