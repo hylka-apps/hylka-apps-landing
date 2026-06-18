@@ -7,7 +7,8 @@
   },
   "appPage": {
     "howItWorks": "How it works",
-    "contact": "Contact us"
+    "contact": "Contact us",
+    "hiddenPreview": "Preview — this app is hidden from the site."
   },
   "header": {
     "cta": "Get the App",
@@ -136,11 +137,11 @@
         "links": [
           {
             "label": "Terms of Use",
-            "href": "/terms"
+            "href": "/legal/terms"
           },
           {
             "label": "Privacy Policy",
-            "href": "/privacy"
+            "href": "/legal/privacy"
           }
         ]
       }
@@ -179,20 +180,7 @@
     "emailLine": "Prefer email? Reach us at",
     "sendAnother": "Send another"
   },
-  "terms": {
-    "meta": {
-      "title": "Terms of Use · Hylka Apps",
-      "description": "Terms of Use for Hylka Apps applications and website."
-    },
-    "h1": "Terms of Use",
-    "updated": "Last updated: 8 June 2026"
-  },
-  "privacy": {
-    "meta": {
-      "title": "Privacy Policy · Hylka Apps",
-      "description": "Privacy Policy for Hylka Apps applications and website."
-    },
-    "h1": "Privacy Policy",
-    "updated": "Last updated: 8 June 2026"
+  "legal": {
+    "updated": "Last updated:"
   }
 }

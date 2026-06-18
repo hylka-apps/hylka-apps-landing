@@ -1,8 +1,10 @@
+import type { PortableTextBlock } from "@portabletext/types";
 import { getSanityClient, isSanityConfigured } from "./client";
 import { urlFor } from "./image";
 import { siteConfig } from "@/config/site";
 
 export type Loc = { en?: string; uk?: string };
+export type LocRichText = { en?: PortableTextBlock[]; uk?: PortableTextBlock[] };
 
 // ── App page sections (polymorphic, ordered in Studio) ────────────────
 export type AppSection =
@@ -12,17 +14,41 @@ export type AppSection =
   | { _type: "articlesSection"; _key: string; eyebrow?: Loc; heading?: Loc; items?: { icon?: string; title?: Loc; excerpt?: Loc }[] }
   | { _type: "testimonialsSection"; _key: string; eyebrow?: Loc; heading?: Loc; items?: { quote?: Loc; name?: string }[] }
   | { _type: "faqSection"; _key: string; eyebrow?: Loc; heading?: Loc; items?: { q?: Loc; a?: Loc }[] }
-  | { _type: "ctaSection"; _key: string; heading?: Loc };
+  | { _type: "ctaSection"; _key: string; heading?: Loc }
+  | {
+      _type: "freeSection";
+      _key: string;
+      eyebrow?: Loc;
+      heading?: Loc;
+      body?: LocRichText;
+      mediaUrl?: string | null;
+      mediaMime?: string | null;
+      ctaLabel?: Loc;
+      ctaUrl?: string;
+    };
+
+// A still image or short video resolved to a URL + mime (for <img> vs <video>).
+export type MediaAsset = { url?: string | null; mime?: string | null };
+
+// A floating chip / plate accent — text + optional color.
+export type AccentChip = { label?: Loc; value?: Loc; accent?: string | null };
 
 export type SanityApp = {
   slug: string;
+  hidden?: boolean;
   name?: Loc;
   kicker?: Loc;
   heroH1?: Loc;
-  heroH1Accent?: Loc;
   heroSubtitle?: Loc;
   appStoreUrl?: string | null;
   iconUrl?: string | null;
+  accent?: string | null;
+  // Hero phone mockup: a screenshot/recording, or a text fallback + chips.
+  screenMedia?: MediaAsset | null;
+  screenLabel?: Loc;
+  screenValue?: Loc;
+  screenSub?: Loc;
+  heroChips?: AccentChip[];
   cardDescription?: Loc;
   cardChips?: Loc[];
   sections?: AppSection[];
@@ -37,12 +63,20 @@ export type SanityAppCard = {
   cardChips?: Loc[];
   appStoreUrl?: string | null;
   iconUrl?: string | null;
+  accent?: string | null;
 };
 
 export type SanityLegalDoc = {
+  title?: Loc;
   updatedAt: string | null;
   contentEn: string;
   contentUk: string;
+};
+
+// Lightweight shape for nav links + static params
+export type SanityLegalLink = {
+  slug: string;
+  title?: Loc;
 };
 
 export type SanitySiteSettings = {
@@ -52,22 +86,39 @@ export type SanitySiteSettings = {
   logo: { asset: { _ref: string } } | null;
 };
 
-// `tags` lets the Sanity webhook purge instantly via revalidateTag("sanity");
+// In dev, fetch fresh every time so Studio edits show on localhost immediately
+// (the Sanity webhook only purges the deployed site, not localhost).
+// In prod: `tags` lets the webhook purge instantly via revalidateTag("sanity");
 // `revalidate` is the hourly safety net if the webhook ever misses.
-const REVALIDATE = { next: { revalidate: 3600, tags: ["sanity"] } };
+const REVALIDATE =
+  process.env.NODE_ENV === "production"
+    ? { next: { revalidate: 3600, tags: ["sanity"] } }
+    : { next: { revalidate: 0, tags: ["sanity"] } };
 
 const APP_FIELDS = `
   "slug": slug.current,
-  name, kicker, heroH1, heroH1Accent, heroSubtitle, appStoreUrl,
+  hidden,
+  name, kicker, heroH1, heroSubtitle, appStoreUrl,
   "iconUrl": icon.asset->url,
+  "accent": accentColor.hex,
+  "screenMedia": screenMedia{ "url": asset->url, "mime": asset->mimeType },
+  screenLabel, screenValue, screenSub,
+  heroChips[]{ label, value, "accent": accentColor.hex },
   cardDescription, cardChips,
-  sections
+  sections[]{
+    ...,
+    _type == "freeSection" => {
+      "mediaUrl": media.asset->url,
+      "mediaMime": media.asset->mimeType
+    }
+  }
 `;
 
 const CARD_FIELDS = `
   "slug": slug.current,
   name, kicker, cardDescription, cardChips, appStoreUrl,
-  "iconUrl": icon.asset->url
+  "iconUrl": icon.asset->url,
+  "accent": accentColor.hex
 `;
 
 export async function getApp(slug: string): Promise<SanityApp | null> {
@@ -82,19 +133,33 @@ export async function getApp(slug: string): Promise<SanityApp | null> {
 export async function getAllApps(): Promise<SanityAppCard[]> {
   if (!isSanityConfigured()) return [];
   return getSanityClient().fetch(
-    `*[_type == "app" && defined(slug.current)] | order(_createdAt asc){${CARD_FIELDS}}`,
+    // Hidden apps drop out of the grid/footer/More page (still reachable by URL).
+    // orderRank is set by the drag-to-reorder list in Studio; _createdAt is the
+    // tiebreaker for any app that predates the ranking field.
+    `*[_type == "app" && defined(slug.current) && hidden != true] | order(orderRank asc, _createdAt asc){${CARD_FIELDS}}`,
     {},
     REVALIDATE
   );
 }
 
 export async function getLegalDoc(
-  docType: "terms" | "privacy"
+  slug: string
 ): Promise<SanityLegalDoc | null> {
   if (!isSanityConfigured()) return null;
   return getSanityClient().fetch(
-    `*[_type == "legalDoc" && docType == $docType][0]{updatedAt, contentEn, contentUk}`,
-    { docType },
+    `*[_type == "legalDoc" && slug.current == $slug][0]{title, updatedAt, contentEn, contentUk}`,
+    { slug },
+    REVALIDATE
+  );
+}
+
+export async function getAllLegalDocs(): Promise<SanityLegalLink[]> {
+  if (!isSanityConfigured()) return [];
+  return getSanityClient().fetch(
+    `*[_type == "legalDoc" && defined(slug.current)] | order(title.en asc){
+      "slug": slug.current, title
+    }`,
+    {},
     REVALIDATE
   );
 }
@@ -107,6 +172,97 @@ async function getSiteSettings(): Promise<SanitySiteSettings | null> {
     REVALIDATE
   );
 }
+
+// ── Homepage content (hero text, floating plates, teaser card) ────────
+export type PlateStyle = "timer" | "bars" | "wave" | "icon";
+export type HeroPlate = {
+  style?: PlateStyle;
+  media?: MediaAsset | null;
+  label?: Loc;
+  sub?: Loc;
+  value?: Loc;
+  accent?: string | null;
+};
+
+export type HomeContent = {
+  heroEyebrow?: Loc;
+  heroHeading?: Loc;
+  heroSub?: Loc;
+  heroPlates?: HeroPlate[];
+  appsEyebrow?: Loc;
+  appsHeading?: Loc;
+  teaserKicker?: Loc;
+  teaserName?: Loc;
+  teaserDesc?: Loc;
+  ctaHeading?: Loc;
+  ctaSub?: Loc;
+};
+
+export async function getHomeContent(): Promise<HomeContent | null> {
+  if (!isSanityConfigured()) return null;
+  return getSanityClient().fetch(
+    `*[_type == "homeContent"][0]{
+      heroEyebrow, heroHeading, heroSub,
+      heroPlates[]{
+        style,
+        "media": media{ "url": asset->url, "mime": asset->mimeType },
+        label, sub, value, "accent": accentColor.hex
+      },
+      appsEyebrow, appsHeading,
+      teaserKicker, teaserName, teaserDesc,
+      ctaHeading, ctaSub
+    }`,
+    {},
+    REVALIDATE
+  );
+}
+
+// ── About page content ───────────────────────────────────────────────
+export type AboutContent = {
+  heroEyebrow?: Loc;
+  heroHeading?: Loc;
+  heroLead?: Loc;
+  story?: Loc;
+  valuesEyebrow?: Loc;
+  valuesHeading?: Loc;
+  valueItems?: { title?: Loc; desc?: Loc }[];
+  ctaHeading?: Loc;
+  ctaSub?: Loc;
+  ctaLabel?: Loc;
+};
+
+export async function getAboutContent(): Promise<AboutContent | null> {
+  if (!isSanityConfigured()) return null;
+  return getSanityClient().fetch(
+    `*[_type == "aboutPage"][0]{
+      heroEyebrow, heroHeading, heroLead, story,
+      valuesEyebrow, valuesHeading,
+      valueItems[]{ title, desc },
+      ctaHeading, ctaSub, ctaLabel
+    }`,
+    {},
+    REVALIDATE
+  );
+}
+
+// ── More / Contact page headers ───────────────────────────────────────
+export type PageHeader = {
+  heroEyebrow?: Loc;
+  heroHeading?: Loc;
+  heroIntro?: Loc;
+};
+
+async function getPageHeader(type: string): Promise<PageHeader | null> {
+  if (!isSanityConfigured()) return null;
+  return getSanityClient().fetch(
+    `*[_type == $type][0]{ heroEyebrow, heroHeading, heroIntro }`,
+    { type },
+    REVALIDATE
+  );
+}
+
+export const getMoreContent = () => getPageHeader("morePage");
+export const getContactContent = () => getPageHeader("contactPage");
 
 // Resolved brand values with defaults — single source of truth for name/email/logo.
 export type Brand = {

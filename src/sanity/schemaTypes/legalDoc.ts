@@ -6,16 +6,23 @@ export const legalDoc = defineType({
   type: "document",
   fields: [
     defineField({
-      name: "docType",
-      title: "Document type",
-      type: "string",
-      options: {
-        list: [
-          { title: "Terms of Service", value: "terms" },
-          { title: "Privacy Policy", value: "privacy" },
-        ],
-        layout: "radio",
-      },
+      name: "title",
+      title: "Title",
+      type: "object",
+      options: { columns: 2 },
+      fields: [
+        defineField({ name: "en", title: "English", type: "string" }),
+        defineField({ name: "uk", title: "Ukrainian", type: "string" }),
+      ],
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug (URL: /legal/<slug>)",
+      type: "slug",
+      options: { source: "title.en" },
+      description:
+        "Add any new document kind by creating a doc with its own slug — no code changes needed. It appears automatically in the footer/More page Legal section.",
       validation: (r) => r.required(),
     }),
     defineField({
@@ -37,6 +44,6 @@ export const legalDoc = defineType({
     }),
   ],
   preview: {
-    select: { title: "docType", subtitle: "updatedAt" },
+    select: { title: "title.en", subtitle: "slug.current" },
   },
 });

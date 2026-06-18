@@ -1,8 +1,11 @@
+import { PortableText } from "@portabletext/react";
 import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
 import FaqAccordion from "@/components/FaqAccordion";
+import HeroMedia from "@/components/HeroMedia";
 import type { AppSection } from "@/sanity/lib/queries";
 import { pick } from "@/lib/i18n";
+import { renderAccent } from "@/lib/accentText";
 
 const STEP_COLORS = [
   "linear-gradient(150deg,#0A84FF,#5AA9FF)",
@@ -176,6 +179,42 @@ export default function AppSections({
                 </div>
               </section>
             );
+
+          case "freeSection": {
+            const eyebrow = pick(s.eyebrow, lang);
+            const heading = pick(s.heading, lang);
+            const blocks = (lang === "uk" ? s.body?.uk : s.body?.en) ?? s.body?.en ?? [];
+            const ctaLabel = pick(s.ctaLabel, lang);
+            return (
+              <section key={s._key} className="section white">
+                <div className="wrap fp-free">
+                  {(eyebrow || heading) && (
+                    <div className="section-head center">
+                      {eyebrow && <p className="eyebrow blue">{eyebrow}</p>}
+                      {heading && <h2 className="h2">{renderAccent(heading)}</h2>}
+                    </div>
+                  )}
+                  {s.mediaUrl && (
+                    <div className="fp-free-media">
+                      <HeroMedia url={s.mediaUrl} mime={s.mediaMime} />
+                    </div>
+                  )}
+                  {blocks.length > 0 && (
+                    <div className="fp-free-body">
+                      <PortableText value={blocks} />
+                    </div>
+                  )}
+                  {ctaLabel && s.ctaUrl && (
+                    <div className="btn-row center mt-32">
+                      <a className="btn btn-primary" href={s.ctaUrl}>
+                        {ctaLabel}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          }
 
           default:
             return null;

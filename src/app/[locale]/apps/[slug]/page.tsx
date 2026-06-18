@@ -6,7 +6,10 @@ import AppSections from "@/components/AppSections";
 import AnchorLink from "@/components/AnchorLink";
 import { getApp, getAllApps, getBrand } from "@/sanity/lib/queries";
 import { preserveCase } from "@/lib/text";
-import { pick } from "@/lib/i18n";
+import { pick, pickOr } from "@/lib/i18n";
+import { accentGradient } from "@/lib/accent";
+import { renderAccent } from "@/lib/accentText";
+import HeroMedia from "@/components/HeroMedia";
 import { resolveStoreUrl } from "@/config/site";
 import "./app.css";
 
@@ -49,22 +52,36 @@ export default async function AppPage({
   // No real URL → undefined → the badge renders inert instead of a dead link.
   const appStoreUrl = resolveStoreUrl(app.appStoreUrl);
   const heroH1 = pick(app.heroH1, lang);
-  const heroAccent = pick(app.heroH1Accent, lang);
+
+  // Hero phone mockup + floating chips. Chips only render when filled in.
+  const chips = (app.heroChips ?? []).slice(0, 2);
+  const CHIP_POS = ["fp-float-streak", "fp-float-today"] as const;
+  const screenBg = accentGradient(app.accent, 172);
 
   return (
     <div className="fp-page">
+      {/* Hidden apps aren't linked anywhere — this direct URL is the preview. */}
+      {app.hidden ? (
+        <div className="fp-preview-flag" role="status">
+          {t("hiddenPreview")}
+        </div>
+      ) : null}
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="fp-hero">
         <div className="fp-hero-grid wrap">
           <div className="fp-copy">
             <span className="fp-eyebrow">
-              <span className="fp-dot" />
+              <span
+                className="fp-dot"
+                style={
+                  app.accent
+                    ? { background: app.accent, boxShadow: `0 0 0 4px ${app.accent}2e` }
+                    : undefined
+                }
+              />
               {preserveCase(pick(app.kicker, lang))}
             </span>
-            <h1 className="fp-h1">
-              {heroH1}
-              {heroAccent ? <> <span className="fp-serif">{heroAccent}</span></> : null}
-            </h1>
+            <h1 className="fp-h1">{renderAccent(heroH1, "fp-serif")}</h1>
             <p className="fp-sub">{pick(app.heroSubtitle, lang)}</p>
             <div className="fp-cta-row">
               <AppStoreBadge href={appStoreUrl} />
@@ -76,23 +93,45 @@ export default async function AppPage({
 
           <div className="fp-stage">
             <div className="fp-phone">
-              <div className="fp-screen">
+              <div
+                className="fp-screen"
+                style={screenBg ? { background: screenBg } : undefined}
+              >
                 <div className="fp-notch" />
-                <div className="fp-phone-inner">
-                  <div className="fp-phone-label">Deep work</div>
-                  <div className="fp-phone-time">24:00</div>
-                  <div className="fp-phone-sub">Session · in flow</div>
-                </div>
+                {app.screenMedia?.url ? (
+                  <HeroMedia
+                    url={app.screenMedia.url}
+                    mime={app.screenMedia.mime}
+                    className="fp-screen-media"
+                  />
+                ) : (
+                  <div className="fp-phone-inner">
+                    <div className="fp-phone-label">
+                      {pickOr(app.screenLabel, lang, "Deep work")}
+                    </div>
+                    <div className="fp-phone-time">
+                      {pickOr(app.screenValue, lang, "24:00")}
+                    </div>
+                    <div className="fp-phone-sub">
+                      {pickOr(app.screenSub, lang, "Session · in flow")}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="fp-float fp-float-streak">
-              <div className="fk">🔥 Streak</div>
-              <div className="fv">12 days</div>
-            </div>
-            <div className="fp-float fp-float-today">
-              <div className="fk">⏱ Today</div>
-              <div className="fv">3h 40m</div>
-            </div>
+            {chips.map((c, i) => {
+              const bg = accentGradient(c.accent, 150);
+              return (
+                <div
+                  key={i}
+                  className={`fp-float ${CHIP_POS[i]}`}
+                  style={bg ? { background: bg } : undefined}
+                >
+                  <div className="fk">{pick(c.label, lang)}</div>
+                  <div className="fv">{pick(c.value, lang)}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -1,9 +1,12 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import AppStoreBadge from "@/components/AppStoreBadge";
-import { getAllApps } from "@/sanity/lib/queries";
+import { getAllApps, getHomeContent } from "@/sanity/lib/queries";
 import { preserveCase } from "@/lib/text";
-import { pick } from "@/lib/i18n";
+import { pick, pickOr } from "@/lib/i18n";
+import { accentGradient } from "@/lib/accent";
+import { renderAccent } from "@/lib/accentText";
+import HeroMedia from "@/components/HeroMedia";
 import { resolveStoreUrl } from "@/config/site";
 import "./landing.css";
 
@@ -23,74 +26,79 @@ export default async function LandingPage({
   const t = await getTranslations("home");
   const lang = locale as "en" | "uk";
 
-  const apps = await getAllApps();
+  const [apps, home] = await Promise.all([getAllApps(), getHomeContent()]);
   // No real URL → undefined → the badge renders inert instead of a dead link.
   const APP_STORE_URL = resolveStoreUrl(apps[0]?.appStoreUrl);
+
+  // Floating hero plates — only render the ones configured in the CMS.
+  // No plates filled in → none shown (no built-in decoration).
+  const plates = home?.heroPlates ?? [];
+  const PLATE_POS = ["p-timer", "p-stats", "p-sounds", "p-icon"] as const;
+
+  const heroHeading = pick(home?.heroHeading, lang);
 
   return (
     <div className="landing-page">
       {/* ============ SHOWCASE / HERO ============ */}
       <section className="showcase">
         <div className="plates" aria-hidden="true">
-          <div className="plate p-timer">
-            <div className="plate-float">
-              <div className="pl-pad">
-                <div className="pl-label">Deep work</div>
-                <div className="pl-sub">Session · in flow</div>
-                <div className="big-time">24:00</div>
-              </div>
-            </div>
-          </div>
-          <div className="plate p-stats">
-            <div className="plate-float">
-              <div className="pl-pad">
-                <div className="pl-label">This week</div>
-                <div className="pl-sub">+38% focus</div>
-                <div className="bars">
-                  <i style={{ height: "42%" }} />
-                  <i style={{ height: "66%" }} />
-                  <i style={{ height: "50%" }} />
-                  <i style={{ height: "88%" }} />
-                  <i style={{ height: "72%" }} />
-                  <i style={{ height: "100%" }} />
+          {plates.slice(0, PLATE_POS.length).map((p, i) => {
+            const pos = PLATE_POS[i];
+            const style = p.style ?? "timer";
+            const bg = accentGradient(p.accent, pos === "p-icon" ? 155 : 160);
+            const label = pick(p.label, lang);
+            const sub = pick(p.sub, lang);
+            const value = pick(p.value, lang);
+            return (
+              <div key={pos} className={`plate ${pos}`} style={bg ? { background: bg } : undefined}>
+                <div className="plate-float">
+                  {p.media?.url ? (
+                    <HeroMedia url={p.media.url} mime={p.media.mime} className="plate-media" />
+                  ) : style === "icon" ? (
+                    <div className="pl-pad">
+                      <div className="live-chip">LIVE</div>
+                      <div className="app-tile-emoji">{value}</div>
+                    </div>
+                  ) : (
+                    <div className="pl-pad">
+                      <div className="pl-label">{label}</div>
+                      <div className="pl-sub">{sub}</div>
+                      {style === "timer" && <div className="big-time">{value}</div>}
+                      {style === "bars" && (
+                        <div className="bars">
+                          {[42, 66, 50, 88, 72, 100].map((h, j) => (
+                            <i key={j} style={{ height: `${h}%` }} />
+                          ))}
+                        </div>
+                      )}
+                      {style === "wave" && (
+                        <div className="wave">
+                          {[0, 0.15, 0.3, 0.1, 0.4, 0.25, 0.5, 0.2].map((d, j) => (
+                            <i key={j} style={{ animationDelay: `${d}s` }} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="plate p-sounds">
-            <div className="plate-float">
-              <div className="pl-pad">
-                <div className="pl-label">Focus sounds</div>
-                <div className="pl-sub">Rainfall · 🎧</div>
-                <div className="wave">
-                  {[0, 0.15, 0.3, 0.1, 0.4, 0.25, 0.5, 0.2].map((d, i) => (
-                    <i key={i} style={{ animationDelay: `${d}s` }} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="plate p-icon">
-            <div className="plate-float">
-              <div className="pl-pad">
-                <div className="live-chip">LIVE</div>
-                <div className="app-tile-emoji">⏱️</div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
 
         <div className="showcase-inner">
           <span className="lp-eyebrow">
             <span className="dot" />
-            <span>{preserveCase(t("eyebrow"))}</span>
+            <span>{preserveCase(pickOr(home?.heroEyebrow, lang, t("eyebrow")))}</span>
           </span>
           <h1 className="lp-h1">
-            {t.rich("h1", {
-              serif: (chunks) => <span className="serif">{chunks}</span>,
-            })}
+            {heroHeading
+              ? renderAccent(heroHeading)
+              : t.rich("h1", {
+                  serif: (chunks) => <span className="serif">{chunks}</span>,
+                })}
           </h1>
-          <p className="lp-sub">{t("sub")}</p>
+          <p className="lp-sub">{pickOr(home?.heroSub, lang, t("sub"))}</p>
           <div className="lp-cta-row">
             <a className="lp-btn lp-btn-primary" href="#apps">
               {t("cta1")}
@@ -118,9 +126,11 @@ export default async function LandingPage({
                 boxShadow: "0 0 0 4px rgba(229,84,75,.18)",
               }}
             />
-            {t("apps.eyebrow")}
+            {pickOr(home?.appsEyebrow, lang, t("apps.eyebrow"))}
           </span>
-          <h2 className="apps-h2">{t("apps.h2")}</h2>
+          <h2 className="apps-h2">
+            {renderAccent(pickOr(home?.appsHeading, lang, t("apps.h2")))}
+          </h2>
         </div>
 
         <div className="apps-col">
@@ -135,7 +145,11 @@ export default async function LandingPage({
               <div className="ac-media">
                 <div
                   className="media-bg"
-                  style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}
+                  style={{
+                    background:
+                      accentGradient(app.accent) ??
+                      CARD_GRADIENTS[i % CARD_GRADIENTS.length],
+                  }}
                 />
                 <span className="ac-live">{t("apps.live")}</span>
                 {app.iconUrl ? (
@@ -177,9 +191,15 @@ export default async function LandingPage({
           {/* What's next — honest teaser plate */}
           <Link className="appcard teaser" href="/contact" aria-label={t("apps.teaser.more")}>
             <div className="ac-body">
-              <span className="ac-kicker">{t("apps.teaser.kicker")}</span>
-              <h3 className="ac-name">{t("apps.teaser.name")}</h3>
-              <p className="ac-desc">{t("apps.teaser.desc")}</p>
+              <span className="ac-kicker">
+                {pickOr(home?.teaserKicker, lang, t("apps.teaser.kicker"))}
+              </span>
+              <h3 className="ac-name">
+                {pickOr(home?.teaserName, lang, t("apps.teaser.name"))}
+              </h3>
+              <p className="ac-desc">
+                {pickOr(home?.teaserDesc, lang, t("apps.teaser.desc"))}
+              </p>
               <div className="teaser-dots" aria-hidden="true">
                 <i />
                 <i />
@@ -200,10 +220,10 @@ export default async function LandingPage({
         <div className="wrap">
           <div className="cta-band accent">
             <h2 className="h2" style={{ color: "#fff" }}>
-              {t("cta.h2")}
+              {renderAccent(pickOr(home?.ctaHeading, lang, t("cta.h2")))}
             </h2>
             <p className="lead" style={{ margin: "14px auto 30px", maxWidth: 480 }}>
-              {t("cta.sub")}
+              {pickOr(home?.ctaSub, lang, t("cta.sub"))}
             </p>
             <div className="btn-row" style={{ justifyContent: "center" }}>
               <AppStoreBadge href={APP_STORE_URL} />

@@ -13,6 +13,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Legal docs moved under /legal/<slug>; keep the old URLs working.
+  async redirects() {
+    return [
+      { source: "/terms", destination: "/legal/terms", permanent: true },
+      { source: "/privacy", destination: "/legal/privacy", permanent: true },
+      { source: "/:locale(en|uk)/terms", destination: "/:locale/legal/terms", permanent: true },
+      { source: "/:locale(en|uk)/privacy", destination: "/:locale/legal/privacy", permanent: true },
+    ];
+  },
 };
 
 export default withSentryConfig(withNextIntl(nextConfig), {

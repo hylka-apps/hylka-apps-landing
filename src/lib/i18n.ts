@@ -9,3 +9,13 @@ export type Lang = "en" | "uk";
 export function pick(loc: Loc | undefined, lang: Lang): string {
   return (loc?.[lang] ?? loc?.en ?? "").toString();
 }
+
+/**
+ * Like `pick`, but returns `fallback` when the localized value is empty.
+ * Lets CMS fields override a hardcoded default without breaking the page
+ * when the field hasn't been filled in yet.
+ */
+export function pickOr(loc: Loc | undefined, lang: Lang, fallback: string): string {
+  const v = pick(loc, lang);
+  return v.trim() ? v : fallback;
+}

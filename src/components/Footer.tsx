@@ -65,10 +65,10 @@ export default async function Footer({
             <h4>{t("cols.legal")}</h4>
             <ul>
               <li>
-                <Link href="/terms">{t("links.terms")}</Link>
+                <Link href="/legal/terms">{t("links.terms")}</Link>
               </li>
               <li>
-                <Link href="/privacy">{t("links.privacy")}</Link>
+                <Link href="/legal/privacy">{t("links.privacy")}</Link>
               </li>
               <li>
                 <a href={`mailto:${email}`}>{email}</a>

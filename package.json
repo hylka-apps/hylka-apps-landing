@@ -10,7 +10,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@sanity/color-input": "^6.0.7",
+    "@sanity/icons": "^3.7.4",
     "@sanity/image-url": "^2.1.1",
+    "@sanity/orderable-document-list": "^2.0.1",
+    "@sanity/ui": "^3.2.0",
     "@sanity/vision": "^5.30.0",
     "@sentry/nextjs": "^10.57.0",
     "next": "16.2.7",

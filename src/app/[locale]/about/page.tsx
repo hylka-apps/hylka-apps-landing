@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getAboutContent } from "@/sanity/lib/queries";
+import { pick, pickOr } from "@/lib/i18n";
+import { renderAccent } from "@/lib/accentText";
 import "./about.css";
 
 // Consistent monochrome line icons for the three value cards (by index).
@@ -49,21 +52,34 @@ export default async function AboutPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const lang = locale as "en" | "uk";
   const t = await getTranslations("about");
-  const values = t.raw("values.items") as Array<{ icon: string; title: string; desc: string }>;
+  const about = await getAboutContent();
+
+  // Fallback to the translation file when a CMS field is empty.
+  const tValues = t.raw("values.items") as Array<{ title: string; desc: string }>;
+  const cmsValues = about?.valueItems ?? [];
+  const values =
+    cmsValues.length > 0
+      ? cmsValues.map((v) => ({ title: pick(v.title, lang), desc: pick(v.desc, lang) }))
+      : tValues;
+
+  const heroHeading = pick(about?.heroHeading, lang);
 
   return (
     <div>
       {/* ── HERO ── */}
       <section className="section white page-hero about-hero">
         <div className="wrap">
-          <p className="eyebrow coral">{t("eyebrow")}</p>
+          <p className="eyebrow coral">{pickOr(about?.heroEyebrow, lang, t("eyebrow"))}</p>
           <h1 className="h1 page-h1 about-h1">
-            {t.rich("h1", {
-              serif: (chunks) => <span className="about-serif">{chunks}</span>,
-            })}
+            {heroHeading
+              ? renderAccent(heroHeading, "about-serif")
+              : t.rich("h1", {
+                  serif: (chunks) => <span className="about-serif">{chunks}</span>,
+                })}
           </h1>
-          <p className="lead about-lead">{t("lead")}</p>
+          <p className="lead about-lead">{pickOr(about?.heroLead, lang, t("lead"))}</p>
         </div>
       </section>
 
@@ -71,7 +87,7 @@ export default async function AboutPage({
       <section className="section surface about-story-sec">
         <div className="wrap">
           <div className="about-story">
-            <p className="about-story-text">{t("story")}</p>
+            <p className="about-story-text">{pickOr(about?.story, lang, t("story"))}</p>
           </div>
         </div>
       </section>
@@ -80,14 +96,14 @@ export default async function AboutPage({
       <section className="section white">
         <div className="wrap">
           <div className="section-head center">
-            <p className="eyebrow green">{t("values.eyebrow")}</p>
-            <h2 className="h2">{t("values.h2")}</h2>
+            <p className="eyebrow green">{pickOr(about?.valuesEyebrow, lang, t("values.eyebrow"))}</p>
+            <h2 className="h2">{pickOr(about?.valuesHeading, lang, t("values.h2"))}</h2>
           </div>
           <div className="grid grid-3 mt-32">
             {values.map((v, i) => (
               <div key={i} className="info-card">
                 <div className="ic" style={{ background: "var(--surface)" }}>
-                  {VALUE_ICONS[i] ?? v.icon}
+                  {VALUE_ICONS[i % VALUE_ICONS.length]}
                 </div>
                 <h3>{v.title}</h3>
                 <p>{v.desc}</p>
@@ -101,11 +117,13 @@ export default async function AboutPage({
       <section className="section white">
         <div className="wrap">
           <div className="cta-band soft center">
-            <h2 className="h2">{t("cta.h2")}</h2>
-            <p className="lead" style={{ marginTop: 14, color: "var(--muted)" }}>{t("cta.sub")}</p>
+            <h2 className="h2">{pickOr(about?.ctaHeading, lang, t("cta.h2"))}</h2>
+            <p className="lead" style={{ marginTop: 14, color: "var(--muted)" }}>
+              {pickOr(about?.ctaSub, lang, t("cta.sub"))}
+            </p>
             <div className="btn-row center mt-32">
               <Link className="btn btn-primary" href="/apps/focusly">
-                {t("cta.cta")} →
+                {pickOr(about?.ctaLabel, lang, t("cta.cta"))} →
               </Link>
             </div>
           </div>

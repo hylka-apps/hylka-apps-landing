@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import ContactForm from "@/components/ContactForm";
-import { getBrand, getAllApps } from "@/sanity/lib/queries";
-import { pick } from "@/lib/i18n";
+import { getBrand, getAllApps, getContactContent } from "@/sanity/lib/queries";
+import { pick, pickOr } from "@/lib/i18n";
+import { renderAccent } from "@/lib/accentText";
 import "./contact.css";
 
 export async function generateMetadata({
@@ -25,8 +26,9 @@ export default async function ContactPage({
   const t = await getTranslations("contact");
   const { email } = await getBrand();
   const lang = locale as "en" | "uk";
-  const apps = await getAllApps();
+  const [apps, contact] = await Promise.all([getAllApps(), getContactContent()]);
   const appOptions = apps.map((a) => pick(a.name, lang));
+  const contactHeading = pick(contact?.heroHeading, lang);
 
   const strings = {
     tabs: {
@@ -59,13 +61,15 @@ export default async function ContactPage({
       {/* ── HEADER ── */}
       <section className="section white page-hero">
         <div className="wrap">
-          <p className="eyebrow green">{t("eyebrow")}</p>
+          <p className="eyebrow green">{pickOr(contact?.heroEyebrow, lang, t("eyebrow"))}</p>
           <h1 className="h1 page-h1">
-            {t.rich("h1", {
-              serif: (chunks) => <span className="contact-serif">{chunks}</span>,
-            })}
+            {contactHeading
+              ? renderAccent(contactHeading, "contact-serif")
+              : t.rich("h1", {
+                  serif: (chunks) => <span className="contact-serif">{chunks}</span>,
+                })}
           </h1>
-          <p className="lead contact-intro">{t("intro")}</p>
+          <p className="lead contact-intro">{pickOr(contact?.heroIntro, lang, t("intro"))}</p>
         </div>
       </section>
 

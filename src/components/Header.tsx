@@ -186,10 +186,6 @@ export default function Header({
             </div>
           </div>
 
-          <Link className="btn btn-primary btn-sm header-cta-desktop" href="/#apps">
-            {t("header.cta")}
-          </Link>
-
           <button
             type="button"
             className="hamburger"
@@ -233,9 +229,6 @@ export default function Header({
           ))}
         </nav>
         <div className="drawer-foot">
-          <Link className="btn btn-primary" href="/#apps" onClick={() => setDrawerOpen(false)}>
-            {t("header.cta")}
-          </Link>
           <div className="drawer-langs">
             {routing.locales.map((loc) => (
               <button

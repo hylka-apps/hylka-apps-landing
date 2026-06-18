@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getAllApps } from "@/sanity/lib/queries";
-import { pick, type Lang } from "@/lib/i18n";
+import { getAllApps, getAllLegalDocs, getMoreContent } from "@/sanity/lib/queries";
+import { pick, pickOr, type Lang } from "@/lib/i18n";
+import { renderAccent } from "@/lib/accentText";
 import "./more.css";
 
 export async function generateMetadata({
@@ -31,9 +32,16 @@ export default async function MorePage({
 
   const sections = t.raw("sections") as Record<string, SectionData>;
 
-  // The apps list is the single source of truth in Sanity — keep the section
-  // title from translations but build its links from the live app list.
-  const apps = await getAllApps();
+  // Apps and legal docs are the single source of truth in Sanity — keep the
+  // section titles from translations but build their links from the live data,
+  // so adding an app or a new legal doc surfaces here with no code change.
+  const [apps, legalDocs, more] = await Promise.all([
+    getAllApps(),
+    getAllLegalDocs(),
+    getMoreContent(),
+  ]);
+  const lang = locale as Lang;
+  const moreHeading = pick(more?.heroHeading, lang);
   if (sections.apps) {
     sections.apps = {
       ...sections.apps,
@@ -43,17 +51,26 @@ export default async function MorePage({
       })),
     };
   }
+  if (sections.legal && legalDocs.length > 0) {
+    sections.legal = {
+      ...sections.legal,
+      links: legalDocs.map((doc) => ({
+        label: pick(doc.title, locale as Lang),
+        href: `/legal/${doc.slug}`,
+      })),
+    };
+  }
 
   return (
     <div>
       {/* ── HEADER ── */}
       <section className="section white page-hero more-hero">
         <div className="wrap">
-          <p className="eyebrow blue">{t("eyebrow")}</p>
-          <h1 className="h1 page-h1">{t("h1")}</h1>
-          <p className="lead more-intro">
-            {t("intro")}
-          </p>
+          <p className="eyebrow blue">{pickOr(more?.heroEyebrow, lang, t("eyebrow"))}</p>
+          <h1 className="h1 page-h1">
+            {moreHeading ? renderAccent(moreHeading) : t("h1")}
+          </h1>
+          <p className="lead more-intro">{pickOr(more?.heroIntro, lang, t("intro"))}</p>
         </div>
       </section>
 
