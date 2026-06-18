@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getAboutContent } from "@/sanity/lib/queries";
+import { getAboutContent, getAllApps } from "@/sanity/lib/queries";
 import { pick, pickOr } from "@/lib/i18n";
 import { renderAccent } from "@/lib/accentText";
 import "./about.css";
 
-// Consistent monochrome line icons for the three value cards (by index).
-// Replaces the mixed emoji set (glyph + emoji, with an invisible white heart).
+// Monochrome line icons for the three value cards, picked by index.
 const ICON_SVG = {
   width: 26,
   height: 26,
@@ -54,7 +53,9 @@ export default async function AboutPage({
   setRequestLocale(locale);
   const lang = locale as "en" | "uk";
   const t = await getTranslations("about");
-  const about = await getAboutContent();
+  const [about, apps] = await Promise.all([getAboutContent(), getAllApps()]);
+  // CTA points at the first live app; falls back to the apps list if none.
+  const ctaHref = apps[0] ? `/apps/${apps[0].slug}` : "/#apps";
 
   // Fallback to the translation file when a CMS field is empty.
   const tValues = t.raw("values.items") as Array<{ title: string; desc: string }>;
@@ -122,7 +123,7 @@ export default async function AboutPage({
               {pickOr(about?.ctaSub, lang, t("cta.sub"))}
             </p>
             <div className="btn-row center mt-32">
-              <Link className="btn btn-primary" href="/apps/focusly">
+              <Link className="btn btn-primary" href={ctaHref}>
                 {pickOr(about?.ctaLabel, lang, t("cta.cta"))} →
               </Link>
             </div>

@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getAllApps } from "@/sanity/lib/queries";
+import { getAllApps, getAllLegalDocs } from "@/sanity/lib/queries";
 import { pick } from "@/lib/i18n";
 
 export default async function Footer({
@@ -16,7 +16,7 @@ export default async function Footer({
 }) {
   const t = await getTranslations("footer");
   const locale = (await getLocale()) as "en" | "uk";
-  const apps = await getAllApps();
+  const [apps, legalDocs] = await Promise.all([getAllApps(), getAllLegalDocs()]);
 
   return (
     <footer className="site-footer">
@@ -64,12 +64,22 @@ export default async function Footer({
           <div className="footer-col">
             <h4>{t("cols.legal")}</h4>
             <ul>
-              <li>
-                <Link href="/legal/terms">{t("links.terms")}</Link>
-              </li>
-              <li>
-                <Link href="/legal/privacy">{t("links.privacy")}</Link>
-              </li>
+              {legalDocs.length > 0 ? (
+                legalDocs.map((doc) => (
+                  <li key={doc.slug}>
+                    <Link href={`/legal/${doc.slug}`}>{pick(doc.title, locale)}</Link>
+                  </li>
+                ))
+              ) : (
+                <>
+                  <li>
+                    <Link href="/legal/terms">{t("links.terms")}</Link>
+                  </li>
+                  <li>
+                    <Link href="/legal/privacy">{t("links.privacy")}</Link>
+                  </li>
+                </>
+              )}
               <li>
                 <a href={`mailto:${email}`}>{email}</a>
               </li>

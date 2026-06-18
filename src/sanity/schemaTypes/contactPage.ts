@@ -1,8 +1,6 @@
 import { defineType } from "sanity";
 import { EnvelopeIcon } from "@sanity/icons";
-import { locString, locText } from "./fields";
-
-const ACCENT_HINT = "Wrap any part in *asterisks* to render it in italic serif.";
+import { locString, locText, ACCENT_HINT } from "./fields";
 
 // Singleton: the Contact page header. The form labels stay in messages/*.json.
 export const contactPage = defineType({

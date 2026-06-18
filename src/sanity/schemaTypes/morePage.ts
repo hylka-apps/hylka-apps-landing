@@ -1,8 +1,6 @@
 import { defineType } from "sanity";
 import { EllipsisHorizontalIcon } from "@sanity/icons";
-import { locString, locText } from "./fields";
-
-const ACCENT_HINT = "Wrap any part in *asterisks* to render it in italic serif.";
+import { locString, locText, ACCENT_HINT } from "./fields";
 
 // Singleton: the More page header. The link sections stay in messages/*.json.
 export const morePage = defineType({

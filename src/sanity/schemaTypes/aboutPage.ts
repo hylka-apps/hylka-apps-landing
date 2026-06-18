@@ -1,8 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { UsersIcon } from "@sanity/icons";
-import { locString, locText } from "./fields";
-
-const ACCENT_HINT = "Wrap any part in *asterisks* to render it in italic serif.";
+import { locString, locText, ACCENT_HINT } from "./fields";
 
 // Singleton: the About page content. Empty fields fall back to messages/*.json.
 export const aboutPage = defineType({

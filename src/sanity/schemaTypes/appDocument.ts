@@ -11,11 +11,8 @@ import {
   BlockElementIcon,
   EyeClosedIcon,
 } from "@sanity/icons";
-import { locString, locText, accentColorField, mediaField } from "./fields";
+import { locString, locText, accentColorField, mediaField, ACCENT_HINT } from "./fields";
 import { EyeToggleInput } from "../components/EyeToggleInput";
-
-// `*asterisks*` in any headline render the wrapped part in italic serif.
-const ACCENT_HINT = "Wrap any part in *asterisks* to render it in italic serif.";
 
 const headingFields = [locString("eyebrow", "Eyebrow (small label)"), locString("heading", "Heading")];
 

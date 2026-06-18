@@ -6,7 +6,7 @@ import AppSections from "@/components/AppSections";
 import AnchorLink from "@/components/AnchorLink";
 import { getApp, getAllApps, getBrand } from "@/sanity/lib/queries";
 import { preserveCase } from "@/lib/text";
-import { pick, pickOr } from "@/lib/i18n";
+import { pick } from "@/lib/i18n";
 import { accentGradient } from "@/lib/accent";
 import { renderAccent } from "@/lib/accentText";
 import HeroMedia from "@/components/HeroMedia";
@@ -53,7 +53,10 @@ export default async function AppPage({
   const appStoreUrl = resolveStoreUrl(app.appStoreUrl);
   const heroH1 = pick(app.heroH1, lang);
 
-  // Hero phone mockup + floating chips. Chips only render when filled in.
+  // Hero phone mockup + floating chips — each part renders only when filled in.
+  const screenLabel = pick(app.screenLabel, lang);
+  const screenValue = pick(app.screenValue, lang);
+  const screenSub = pick(app.screenSub, lang);
   const chips = (app.heroChips ?? []).slice(0, 2);
   const CHIP_POS = ["fp-float-streak", "fp-float-today"] as const;
   const screenBg = accentGradient(app.accent, 172);
@@ -106,15 +109,9 @@ export default async function AppPage({
                   />
                 ) : (
                   <div className="fp-phone-inner">
-                    <div className="fp-phone-label">
-                      {pickOr(app.screenLabel, lang, "Deep work")}
-                    </div>
-                    <div className="fp-phone-time">
-                      {pickOr(app.screenValue, lang, "24:00")}
-                    </div>
-                    <div className="fp-phone-sub">
-                      {pickOr(app.screenSub, lang, "Session · in flow")}
-                    </div>
+                    {screenLabel && <div className="fp-phone-label">{screenLabel}</div>}
+                    {screenValue && <div className="fp-phone-time">{screenValue}</div>}
+                    {screenSub && <div className="fp-phone-sub">{screenSub}</div>}
                   </div>
                 )}
               </div>

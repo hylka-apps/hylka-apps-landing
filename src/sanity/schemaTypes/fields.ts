@@ -1,5 +1,9 @@
 import { defineField } from "sanity";
 
+// Hint shown under any headline field that supports the *asterisk* accent marker.
+export const ACCENT_HINT =
+  "Wrap any part in *asterisks* to render it in italic serif.";
+
 // ── shared field builders (used by app + siteSettings) ────────────────
 
 /** Localized single-line string (EN / UK side by side). */

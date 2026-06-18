@@ -15,7 +15,6 @@ function parseMarkdown(md: string): Section[] {
       continue;
     }
     if (current && line.trim()) {
-      // inline links [text](href) → <a>
       current.body.push(line.trim());
     }
   }

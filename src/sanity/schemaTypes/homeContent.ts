@@ -1,8 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { HomeIcon } from "@sanity/icons";
-import { locString, locText, accentColorField, mediaField } from "./fields";
-
-const ACCENT_HINT = "Wrap any part in *asterisks* to render it in italic serif.";
+import { locString, locText, accentColorField, mediaField, ACCENT_HINT } from "./fields";
 
 // One floating hero plate: a built-in animation (or your own image/GIF) + text.
 const heroPlate = defineArrayMember({
@@ -24,7 +22,7 @@ const heroPlate = defineArrayMember({
       },
       initialValue: "timer",
     }),
-    mediaField("media", "Image / GIF (optional)", "Replaces the animation for this plate."),
+    mediaField("media", "Image / GIF (optional)", "Shown instead of the animation for this plate."),
     locString("label", "Label"),
     locString("sub", "Sub line"),
     locString("value", "Big value (timer text or emoji)"),
@@ -65,7 +63,7 @@ export const homeContent = defineType({
       ...defineField({
         name: "heroPlates",
         title: "Floating plates",
-        description: "Up to four cards floating around the hero. Empty → built-in defaults.",
+        description: "Up to four cards floating around the hero. Empty → none shown.",
         type: "array",
         validation: (r) => r.max(4),
         of: [heroPlate],
