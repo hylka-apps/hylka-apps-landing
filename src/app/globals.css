@@ -586,8 +586,8 @@ h4 {
 .hamburger span::after {
   content: "";
   display: block;
-  width: 18px;
-  height: 2px;
+  width: 19px;
+  height: 1.5px;
   background: var(--text);
   border-radius: 2px;
   position: relative;
@@ -610,15 +610,15 @@ h4 {
   }
 }
 
-/* mobile drawer */
+/* mobile menu — full-screen, Apple-style */
 .drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(16, 16, 16, 0.35);
+  background: rgba(16, 16, 16, 0.25);
   z-index: 200;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.22s ease;
+  transition: opacity 0.25s ease;
 }
 .drawer-overlay.open {
   opacity: 1;
@@ -626,75 +626,141 @@ h4 {
 }
 .drawer {
   position: fixed;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: min(86vw, 360px);
-  background: #fff;
+  inset: 0;
+  /* dvh tracks the visible viewport, so the bottom controls never hide
+     behind iOS Safari's toolbar (100vh / 100% would extend under it). */
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  /* Frosted full-screen panel — the page blurs through behind it. */
+  background: rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  backdrop-filter: saturate(180%) blur(24px);
   z-index: 210;
-  transform: translateX(100%);
-  transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  padding: 22px;
+  padding: 14px 24px 24px;
+  /* Respect the notch / home indicator (active when viewport-fit=cover). */
+  padding-top: max(14px, env(safe-area-inset-top));
+  padding-right: max(24px, env(safe-area-inset-right));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  padding-left: max(24px, env(safe-area-inset-left));
+  /* Short landscape screens: scroll the menu instead of clipping it. */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Hidden + non-focusable until open; gentle fade + slide reveal. */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.28s ease,
+    transform 0.34s cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s linear 0.34s;
 }
 .drawer.open {
-  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.28s ease,
+    transform 0.34s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s;
 }
 .drawer-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 18px;
+  /* Match the site header height so the logo doesn't jump when the menu opens. */
+  height: 66px;
+  margin-bottom: 12px;
 }
 .drawer-close {
+  display: inline-grid;
+  place-items: center;
   width: 42px;
   height: 42px;
   border: 1px solid var(--hairline);
   border-radius: 12px;
   background: #fff;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1;
 }
 .drawer nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 .drawer nav a {
-  padding: 14px 12px;
-  border-radius: 12px;
+  padding: 18px 2px;
   font-size: 18px;
   font-weight: 500;
+  color: var(--text);
+  border-bottom: 1px solid var(--hairline);
+  /* Staggered reveal once the panel is open. */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.32, 0.72, 0, 1),
+    color 0.15s ease;
 }
-.drawer nav a:hover {
-  background: var(--surface);
+.drawer nav a:active {
+  color: var(--blue);
+}
+.drawer.open nav a {
+  opacity: 1;
+  transform: translateY(0);
+}
+.drawer.open nav a:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.drawer.open nav a:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.drawer.open nav a:nth-child(3) {
+  transition-delay: 0.15s;
+}
+.drawer.open nav a:nth-child(4) {
+  transition-delay: 0.2s;
 }
 .drawer-foot {
   margin-top: auto;
+  padding-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease 0.24s,
+    transform 0.4s cubic-bezier(0.32, 0.72, 0, 1) 0.24s;
+}
+.drawer.open .drawer-foot {
+  opacity: 1;
+  transform: translateY(0);
 }
 .drawer-langs {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 .drawer-langs button {
   flex: 1;
-  padding: 12px;
+  padding: 14px;
   border: 1px solid var(--hairline);
-  border-radius: 12px;
+  border-radius: 14px;
   background: #fff;
   cursor: pointer;
   font-family: var(--font);
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16px;
 }
 .drawer-langs button.sel {
   border-color: var(--blue);
   color: var(--blue);
+}
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawer nav a,
+  .drawer-foot {
+    transition-duration: 0.01ms;
+    transform: none;
+  }
 }
 
 /* ============================================================

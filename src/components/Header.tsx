@@ -127,6 +127,7 @@ export default function Header({
   };
 
   return (
+    <>
     <header className="site-header">
       <div className="wrap">
         <Brand siteName={siteName} logoUrl={logoUrl} />
@@ -196,8 +197,11 @@ export default function Header({
           </button>
         </div>
       </div>
+    </header>
 
-      {/* mobile drawer */}
+      {/* Mobile drawer — kept OUTSIDE <header>: the header's backdrop-filter
+          would otherwise become the containing block for these fixed elements
+          (iOS Safari anchors them to the 66px header box, not the viewport). */}
       <div
         className={`drawer-overlay${drawerOpen ? " open" : ""}`}
         onClick={() => setDrawerOpen(false)}
@@ -243,6 +247,6 @@ export default function Header({
           </div>
         </div>
       </aside>
-    </header>
+    </>
   );
 }
