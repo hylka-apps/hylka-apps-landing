@@ -1,6 +1,6 @@
-# Hylka Apps — Landing
+# Hilka Apps — Landing
 
-Marketing website for **Hylka Apps**, an indie iOS studio.
+Marketing website for **Hilka Apps**, an indie iOS studio.
 
 ## Stack
 
